@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53125525898",
+    "project_id": "mtstudentinformationmana-c3a70",
+    "storage_bucket": "mtstudentinformationmana-c3a70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53125525898:android:1e4b4c608dc2e0ff4e9873",
+        "android_client_info": {
+          "package_name": "com.phule.mtstudentinformationmanagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZKI8KASqPckCROmYac-N4f7Gvc_eAXI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
