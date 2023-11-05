@@ -1,19 +1,30 @@
 package com.phule.mtstudentinformationmanagement;
 
-import java.util.Date;
+import com.google.firebase.firestore.PropertyName;
 
 public class Student {
-    private String id;
+    @PropertyName("Code")
+    private String code;
+    @PropertyName("Name")
     private String name;
-    private Date birthday;
+    @PropertyName("Birthday")
+    private String birthday;
+    @PropertyName("Address")
     private String address;
+    @PropertyName("Gender")
     private boolean gender;
+    @PropertyName("Phone")
     private String phone;
+    @PropertyName("EnrollmentDate")
     private String enrollmentDate;
+    @PropertyName("Major")
     private String major;
+    public Student() {
 
-    public Student(String id, String name, Date birthday, String address, boolean gender, String phone, String enrollmentDate, String major) {
-        this.id = id;
+    }
+
+    public Student(String code, String name, String birthday, String address, boolean gender, String phone, String enrollmentDate, String major) {
+        this.code = code;
         this.name = name;
         this.birthday = birthday;
         this.address = address;
@@ -23,12 +34,12 @@ public class Student {
         this.major = major;
     }
 
-    public String getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -39,11 +50,11 @@ public class Student {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

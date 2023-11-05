@@ -1,14 +1,23 @@
 package com.phule.mtstudentinformationmanagement;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +30,9 @@ import java.util.List;
  */
 public class StudentListFragment extends Fragment {
     private RecyclerView recyclerView;
+    private List<Student> studentList;
     private StudentAdapter adapter;
+    private FirebaseFirestore firestoreDB;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -65,33 +76,41 @@ public class StudentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
 
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<Student> studentList = new ArrayList<>();
-
-        // Dummy data
-        for (int i = 1; i <= 20; i++) {
-            Date dummyBirthday = new Date();
-            String dummyEnrollmentDate = "2023-09-01";
-
-            boolean dummyGender = (i % 2 == 0);
-
-            studentList.add(new Student(
-                    "ID" + i,
-                    "Student " + i,
-                    dummyBirthday,
-                    "123 Main St",
-                    dummyGender,
-                    "555-1234",
-                    dummyEnrollmentDate,
-                    "Major " + i
-            ));
-        }
+        firestoreDB = FirebaseFirestore.getInstance();
+        studentList = new ArrayList<>();
 
         adapter = new StudentAdapter(studentList);
         recyclerView.setAdapter(adapter);
 
+        EventChangeListener();
+
         return view;
+    }
+
+    private void EventChangeListener() {
+        Log.d("EventChangeListener", "EventChangeListener");
+
+        firestoreDB.collection("Students")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.d("Firestore", "Firestore error");
+                            return;
+                        }
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if(dc.getType() == DocumentChange.Type.ADDED) {
+                                studentList.add(dc.getDocument().toObject(Student.class));
+                            }
+                            Log.d("Recycler", "Recycler " + String.valueOf(adapter.getItemCount()));
+
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 }

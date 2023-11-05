@@ -25,7 +25,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull StudentAdapter.ViewHolder holder, int position) {
         Student student = studentList.get(position);
-        holder.studentId.setText(student.getId());
+        holder.studentCode.setText(student.getCode());
         holder.studentName.setText(student.getName());
     }
 
@@ -35,11 +35,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView studentId;
+        public TextView studentCode;
         public TextView studentName;
         public ViewHolder(View itemView) {
             super(itemView);
-            studentId = itemView.findViewById(R.id.item_student_id);
+            studentCode = itemView.findViewById(R.id.item_student_id);
             studentName = itemView.findViewById(R.id.item_student_name);
         }
     }
