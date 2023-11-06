@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -48,12 +50,22 @@ public class MainActivity extends AppCompatActivity {
                 changeFragment(new StudentListFragment());
             }
             else if(item.getItemId() == R.id.menu_nav_logout) {
-//                Log out here
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(this , LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
+
+            // Highlight the selected item
+            item.setChecked(true);
+
             // Close nav drawer
             drawerLayout.closeDrawers();
             return true;
         });
+
+        // Set "Student List" as checked by default
+        navigationView.setCheckedItem(R.id.menu_nav_student_list);
     }
 
     @Override

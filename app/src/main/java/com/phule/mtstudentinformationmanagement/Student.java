@@ -5,6 +5,8 @@ import com.google.firebase.firestore.PropertyName;
 import java.io.Serializable;
 
 public class Student implements Serializable {
+    private String documentId;
+
     @PropertyName("Code")
     private String code;
     @PropertyName("Name")
@@ -21,6 +23,7 @@ public class Student implements Serializable {
     private String enrollmentDate;
     @PropertyName("Major")
     private String major;
+
     public Student() {
 
     }
@@ -34,6 +37,14 @@ public class Student implements Serializable {
         this.phone = phone;
         this.enrollmentDate = enrollmentDate;
         this.major = major;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
     public String getCode() {

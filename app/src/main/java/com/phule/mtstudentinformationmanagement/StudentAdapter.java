@@ -1,14 +1,20 @@
 package com.phule.mtstudentinformationmanagement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -34,11 +40,59 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         holder.tvOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Code here
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), holder.tvOption);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_item_option, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if(menuItem.getItemId() == R.id.menu_edit) {
+                            // Edit action
+                        }
+                        else if(menuItem.getItemId() == R.id.menu_remove) {
+                            new AlertDialog.Builder(view.getContext())
+                                    .setTitle(view.getContext().getString(R.string.confirm_removal_title))
+                                    .setMessage(view.getContext().getString(R.string.confirm_removal_msg))
+                                    .setIcon(view.getContext().getDrawable(R.drawable.baseline_warning_24))
+                                    .setPositiveButton(view.getContext().getString(R.string.confirm_removal_accept), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            // Remove student from Firestore
+                                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                            db.collection("Students").document(student.getDocumentId())
+                                                    .delete()
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        // Remove student from studentList recycler view
+                                                        studentList.remove(position);
+                                                        notifyItemRemoved(position);
+                                                        Toast.makeText(view.getContext(), "Student removed", Toast.LENGTH_SHORT).show();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        // Handle Firestore deletion failure
+                                                        Toast.makeText(view.getContext(), "Error removing student", Toast.LENGTH_SHORT).show();
+                                                    });
+                                        }
+                                    })
+                                    .setNegativeButton(view.getContext().getString(R.string.confirm_removal_deny), null)
+                                    .show();
+
+                        }
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
             }
         });
     }
 
+    private void removeStudentById(String studentId) {
+        for (int i = 0; i < studentList.size(); i++) {
+            if (studentList.get(i).getDocumentId().equals(studentId)) {
+                studentList.remove(i);
+                return;
+            }
+        }
+    }
     @Override
     public int getItemCount() {
         return studentList.size();

@@ -108,17 +108,27 @@ public class StudentListFragment extends Fragment {
                             Log.d("Firestore", "Firestore error");
                             return;
                         }
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            if(dc.getType() == DocumentChange.Type.ADDED) {
-                                studentList.add(dc.getDocument().toObject(Student.class));
-                            }
-                            Log.d("Recycler", "Recycler " + String.valueOf(adapter.getItemCount()));
 
-                            adapter.notifyDataSetChanged();
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Student addedStudent = dc.getDocument().toObject(Student.class);
+                                    addedStudent.setDocumentId(dc.getDocument().getId());
+                                    studentList.add(addedStudent);
+                                    break;
+
+                                default:
+                                    // Handle other types if needed
+                                    break;
+                            }
                         }
+
+                        // Notify the adapter of changes
+                        adapter.notifyDataSetChanged();
                     }
                 });
     }
+
 
     private void initUi(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
