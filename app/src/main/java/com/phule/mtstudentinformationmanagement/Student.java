@@ -2,7 +2,9 @@ package com.phule.mtstudentinformationmanagement;
 
 import com.google.firebase.firestore.PropertyName;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
     @PropertyName("Code")
     private String code;
     @PropertyName("Name")

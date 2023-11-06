@@ -1,6 +1,7 @@
 package com.phule.mtstudentinformationmanagement;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +35,7 @@ public class StudentListFragment extends Fragment {
     private List<Student> studentList;
     private StudentAdapter adapter;
     private FirebaseFirestore firestoreDB;
+    private FloatingActionButton floatingActionButton;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -76,8 +79,9 @@ public class StudentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
 
+        initUi(view);
+        initListener();
 
-        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         firestoreDB = FirebaseFirestore.getInstance();
@@ -87,6 +91,8 @@ public class StudentListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         EventChangeListener();
+
+
 
         return view;
     }
@@ -112,5 +118,20 @@ public class StudentListFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    private void initUi(View view) {
+        recyclerView = view.findViewById(R.id.recyclerView);
+        floatingActionButton = view.findViewById(R.id.fab_add_student);
+    }
+
+    private void initListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateStudentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

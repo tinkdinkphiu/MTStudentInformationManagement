@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MTStudentInformationManagement"
         tools:targetApi="31">
         <activity
+            android:name=".CreateStudentActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditStudentActivity"
             android:exported="false" />
         <activity

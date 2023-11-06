@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:layout_margin="12dp"
     android:orientation="vertical"
-    tools:context=".EditStudentActivity">
+    tools:context=".CreateStudentActivity">
 
     <TextView
         style="@style/TextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/edit_student" />
+        android:text="@string/add_student" />
 
     <!--    Code-->
     <com.google.android.material.textfield.TextInputLayout
@@ -179,7 +179,7 @@
         android:id="@+id/btn_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"
+        android:text="@string/create"
         style="@style/TextPrimaryOpposite"
         android:layout_gravity="bottom"/>
 

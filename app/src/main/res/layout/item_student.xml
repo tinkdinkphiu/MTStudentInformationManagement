@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    android:orientation="horizontal">
+    android:layout_margin="2dp">
 
     <TextView
-        android:id="@+id/item_student_id"
-        style="?attr/textPrimary"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content" />
+        android:id="@+id/item_tv_option"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dots_3_vertical"
+        android:textSize="24sp"
+        android:layout_gravity="right"
+        android:textAlignment="center"
+        tools:ignore="RtlCompat,RtlHardcoded" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/item_student_name"
-        style="?attr/textPrimary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/item_student_id"
+            style="@style/TextPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="52100572"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/item_student_name"
+            style="@style/TextPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lê Trần Phú"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">MTStudentInformationManagement</string>
 
+    <string name="dots_3_vertical">&#8942;</string>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="create">Create</string>
+    <string name="save">Save</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -10,6 +14,8 @@
     <string name="sign_up">Sign up</string>
     <string name="create_new_account">Create new account</string>
 
+    <string name="add_student">Add student</string>
+    <string name="edit_student">Edit student</string>
     <string name="student_code">Student code</string>
     <string name="code">Code</string>
     <string name="name">Name</string>
