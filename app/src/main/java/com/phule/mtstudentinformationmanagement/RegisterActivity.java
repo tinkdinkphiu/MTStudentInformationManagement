@@ -52,9 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
     private void onClickSignUp() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
-
+        if (!isValidEmail(email) || !isValidPassword(password)) { return; }
+        
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -72,5 +72,22 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    private boolean isValidEmail(String email) {
+        if (!Helper.isValidEmail(email)) {
+            ilEmail.setError("Vui lòng nhập lại email");
+            return false;
+        }
+        ilEmail.setError(null);
+        return true;
+    }
+
+    private boolean isValidPassword(String password) {
+        if (!Helper.isValidPassword(password)) {
+            ilPassword.setError("Mật khẩu chưa đúng chuẩn mực");
+            return false;
+        }
+        ilPassword.setError(null);
+        return true;
     }
 }
