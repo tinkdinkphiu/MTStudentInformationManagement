@@ -1,5 +1,6 @@
 package com.phule.mtstudentinformationmanagement;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +43,6 @@ public class StudentListFragment extends Fragment {
     private StudentAdapter adapter;
     private FirebaseFirestore firestoreDB;
     private FloatingActionButton floatingActionButton;
-    ProgressDialog progressDialog;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -95,7 +95,7 @@ public class StudentListFragment extends Fragment {
         firestoreDB = FirebaseFirestore.getInstance();
         studentList = new ArrayList<>();
 
-        adapter = new StudentAdapter(studentList);
+        adapter = new StudentAdapter(studentList, this);
         recyclerView.setAdapter(adapter);
 
         EventChangeListener();
@@ -146,5 +146,13 @@ public class StudentListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    // ReloadAfterEditStudent(2) - Pass intent to MainActivity
+    public void receiveFromAdapter(Intent intent) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.editStudent(intent);
+        }
     }
 }

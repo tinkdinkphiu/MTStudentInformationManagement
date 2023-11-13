@@ -27,9 +27,11 @@ import java.util.List;
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
     private static StudentAdapter instance;
     private List<Student> studentList;
-    public StudentAdapter(List<Student> studentList) {
+    private StudentListFragment studentListFragment;
+    public StudentAdapter(List<Student> studentList, StudentListFragment studentListFragment) {
 
         this.studentList = studentList;
+        this.studentListFragment = studentListFragment;
         instance = this;
     }
     public static StudentAdapter getInstance() {
@@ -66,7 +68,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                             intent.putExtra("phone", student.getPhone());
                             intent.putExtra("enrollmentDate", student.getEnrollmentDate());
                             intent.putExtra("major", student.getMajor());
-                            view.getContext().startActivity(intent);
+                            // ReloadAfterEditStudent(1) - Pass intent to StudentListFragment
+                            studentListFragment.receiveFromAdapter(intent);
                         }
                         else if(menuItem.getItemId() == R.id.menu_remove) {
                             // Remove action

@@ -2,6 +2,7 @@ package com.phule.mtstudentinformationmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -125,6 +126,8 @@ public class EditStudentActivity extends AppCompatActivity {
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(EditStudentActivity.this, "Student updated", Toast.LENGTH_SHORT).show();
                                         Log.d("updateStudent", "Student updated successfully");
+                                        // ReloadAfterEditStudent(4) - Return result to MainActivity
+                                        setResult(Activity.RESULT_OK);
                                         finish();
                                     })
                                     .addOnFailureListener(e -> {
