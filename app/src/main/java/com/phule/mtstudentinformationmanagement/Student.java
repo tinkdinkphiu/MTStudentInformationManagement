@@ -14,7 +14,7 @@ public class Student implements Serializable {
     @PropertyName("Address")
     private String address;
     @PropertyName("Gender")
-    private boolean gender;
+    private String gender;
     @PropertyName("Phone")
     private String phone;
     @PropertyName("EnrollmentDate")
@@ -25,8 +25,7 @@ public class Student implements Serializable {
     public Student() {
 
     }
-
-    public Student(String code, String name, String birthday, String address, boolean gender, String phone, String enrollmentDate, String major) {
+    public Student(String code, String name, String birthday, String address, String gender, String phone, String enrollmentDate, String major) {
         this.code = code;
         this.name = name;
         this.birthday = birthday;
@@ -69,11 +68,11 @@ public class Student implements Serializable {
         this.address = address;
     }
 
-    public boolean isGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

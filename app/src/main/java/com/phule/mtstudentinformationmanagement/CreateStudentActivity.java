@@ -55,13 +55,10 @@ public class CreateStudentActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String birthday = etBirthday.getText().toString();
                 String address = etAddress.getText().toString();
-                String textGender = etGender.getText().toString();
+                String gender = etGender.getText().toString();
                 String phone = etPhone.getText().toString();
                 String enrollmentDate = etEnrollmentDate.getText().toString();
                 String major = etMajor.getText().toString();
-
-                boolean gender;
-                gender = textGender.equals("Male");
 
                 Student newStudent = new Student(code, name, birthday, address, gender, phone, enrollmentDate, major);
 

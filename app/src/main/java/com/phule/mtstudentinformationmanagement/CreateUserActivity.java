@@ -75,12 +75,12 @@ public class CreateUserActivity extends AppCompatActivity {
 
                                 DocumentReference df = firebaseFirestore.collection("Users").document(user.getUid());
                                 Map<String, Object> userInfo = new HashMap<>();
-                                userInfo.put("Email", etEmail.getText().toString());
-                                userInfo.put("Name", etName.getText().toString());
-                                userInfo.put("Age", etAge.getText().toString());
-                                userInfo.put("Phone", etPhone.getText().toString());
-                                userInfo.put("Status", etStatus.getText().toString());
-                                userInfo.put("Role", etRole.getText().toString());
+                                userInfo.put("email", etEmail.getText().toString());
+                                userInfo.put("name", etName.getText().toString());
+                                userInfo.put("age", etAge.getText().toString());
+                                userInfo.put("phone", etPhone.getText().toString());
+                                userInfo.put("status", etStatus.getText().toString());
+                                userInfo.put("role", etRole.getText().toString());
 
                                 df.set(userInfo);
 
