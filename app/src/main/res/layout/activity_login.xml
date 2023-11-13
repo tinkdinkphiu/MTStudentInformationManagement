@@ -10,7 +10,7 @@
     tools:context=".LoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_username"
+        android:id="@+id/il_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
@@ -50,12 +50,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sign_in" />
-
-    <Button
-        android:id="@+id/btn_create_new_account"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_new_account" />
 
 </LinearLayout>
