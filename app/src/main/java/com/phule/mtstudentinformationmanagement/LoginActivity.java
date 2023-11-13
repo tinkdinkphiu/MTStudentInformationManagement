@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onClickSignIn() {
+        // @TODO: validate users' input, email empty -> crash app
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         
