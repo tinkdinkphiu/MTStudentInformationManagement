@@ -30,10 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firebaseFirestore;
-    private FirebaseUser firebaseUser;
-    private String userRole;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -53,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Load StudentListFragment by default
         changeFragment(new StudentListFragment());
-
-        // Initial firebase
-        fireBaseInitial();
-        // Get current user;
-        getCurrentFirebaseUser();
 
         // Set up navigation view listener
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -88,32 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set "Student List" as checked by default
         navigationView.setCheckedItem(R.id.menu_nav_student_manager);
-    }
-    private void fireBaseInitial() {
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-    }
-
-    private void getCurrentFirebaseUser() {
-        DocumentReference df = firebaseFirestore.collection("Users").document(firebaseUser.getUid());
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()) {
-                    userRole = documentSnapshot.getString("Role");
-                    Log.d("getUserRole", "Get user role Succeeded: " + userRole);
-                }
-                else {
-                    Log.d("getUserRole", "Get user role Failed");
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("getUserRole", "Document Reference failed");
-            }
-        });
     }
 
     @Override
