@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout ilEmail, ilPassword;
     private TextInputEditText etEmail, etPassword;
-    private Button btnSignin, btnCreateNewAccount;
+    private Button btnSignin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,31 +34,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUi() {
         ilEmail = findViewById(R.id.il_email);
-        ilPassword = findViewById(R.id.il_email);
+        ilPassword = findViewById(R.id.il_password);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
         btnSignin = findViewById(R.id.btn_sign_in);
-        btnCreateNewAccount = findViewById(R.id.btn_create_new_account);
     }
 
     private void initListener() {
-        btnCreateNewAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickCreateAccount();
-            }
-        });
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickSignIn();
             }
         });
-    }
-
-    private void onClickCreateAccount() {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
     }
 
     private void onClickSignIn() {

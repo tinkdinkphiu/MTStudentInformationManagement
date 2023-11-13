@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,9 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -36,6 +42,7 @@ public class StudentListFragment extends Fragment {
     private StudentAdapter adapter;
     private FirebaseFirestore firestoreDB;
     private FloatingActionButton floatingActionButton;
+    ProgressDialog progressDialog;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -82,6 +89,7 @@ public class StudentListFragment extends Fragment {
         initUi(view);
         initListener();
 
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         firestoreDB = FirebaseFirestore.getInstance();
@@ -92,14 +100,10 @@ public class StudentListFragment extends Fragment {
 
         EventChangeListener();
 
-
-
         return view;
     }
 
     private void EventChangeListener() {
-        Log.d("EventChangeListener", "EventChangeListener");
-
         firestoreDB.collection("Students")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -113,7 +117,6 @@ public class StudentListFragment extends Fragment {
                             switch (dc.getType()) {
                                 case ADDED:
                                     Student addedStudent = dc.getDocument().toObject(Student.class);
-                                    addedStudent.setDocumentId(dc.getDocument().getId());
                                     studentList.add(addedStudent);
                                     break;
 
