@@ -120,9 +120,6 @@ public class StudentListFragment extends Fragment {
                                     studentList.add(addedStudent);
                                     break;
 
-                                case MODIFIED:
-                                    break;
-
                                 default:
                                     // Handle other types if needed
                                     break;

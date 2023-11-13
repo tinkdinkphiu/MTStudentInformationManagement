@@ -67,7 +67,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                             intent.putExtra("enrollmentDate", student.getEnrollmentDate());
                             intent.putExtra("major", student.getMajor());
                             view.getContext().startActivity(intent);
-                            notifyDataSetChanged();
                         }
                         else if(menuItem.getItemId() == R.id.menu_remove) {
                             // Remove action
