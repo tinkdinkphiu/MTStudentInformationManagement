@@ -3,6 +3,7 @@ package com.phule.mtstudentinformationmanagement;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.w3c.dom.Text;
 
@@ -58,18 +62,46 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             // Remove student from Firestore
                                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                            db.collection("Students").document(student.getDocumentId())
-                                                    .delete()
-                                                    .addOnSuccessListener(aVoid -> {
-                                                        // Remove student from studentList recycler view
-                                                        studentList.remove(position);
-                                                        notifyItemRemoved(position);
-                                                        Toast.makeText(view.getContext(), "Student removed", Toast.LENGTH_SHORT).show();
-                                                    })
-                                                    .addOnFailureListener(e -> {
-                                                        // Handle Firestore deletion failure
-                                                        Toast.makeText(view.getContext(), "Error removing student", Toast.LENGTH_SHORT).show();
+//                                            db.collection("Students").document(student.getCode())
+//                                                    .delete()
+//                                                    .addOnSuccessListener(aVoid -> {
+//                                                        // Remove student from studentList recycler view
+//                                                        studentList.remove(position);
+//                                                        notifyItemRemoved(position);
+//                                                        Toast.makeText(view.getContext(), "Student removed", Toast.LENGTH_SHORT).show();
+//                                                    })
+//                                                    .addOnFailureListener(e -> {
+//                                                        // Handle Firestore deletion failure
+//                                                        Toast.makeText(view.getContext(), "Error removing student", Toast.LENGTH_SHORT).show();
+//                                                    });
+
+                                            db.collection("Students").whereEqualTo("code", student.getCode()).get()
+                                                    .addOnCompleteListener(task -> {
+                                                        if (task.isSuccessful()) {
+                                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                                String documentId = document.getId();
+
+                                                                db.collection("Students").document(documentId)
+                                                                        .delete()
+                                                                        .addOnSuccessListener(aVoid -> {
+                                                                            studentList.remove(position);
+                                                                            notifyItemRemoved(position);
+                                                                            Toast.makeText(view.getContext(), "Student removed", Toast.LENGTH_SHORT).show();
+                                                                            Log.d("removeStudent", "Student removed successfully: " + student.getCode());
+                                                                        })
+                                                                        .addOnFailureListener(e -> {
+                                                                            // Handle Firestore deletion failure
+                                                                            Toast.makeText(view.getContext(), "Error removing student", Toast.LENGTH_SHORT).show();
+                                                                            Log.d("removeStudent", "Student removed failed: " + student.getCode());
+
+                                                                        });
+                                                            }
+                                                        } else {
+                                                            Log.d("removeStudent", "Failed to find code");
+                                                            Toast.makeText(view.getContext(), "Failed to find code", Toast.LENGTH_SHORT).show();
+                                                        }
                                                     });
+
                                         }
                                     })
                                     .setNegativeButton(view.getContext().getString(R.string.confirm_removal_deny), null)
@@ -83,15 +115,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 popupMenu.show();
             }
         });
-    }
-
-    private void removeStudentById(String studentId) {
-        for (int i = 0; i < studentList.size(); i++) {
-            if (studentList.get(i).getDocumentId().equals(studentId)) {
-                studentList.remove(i);
-                return;
-            }
-        }
     }
     @Override
     public int getItemCount() {

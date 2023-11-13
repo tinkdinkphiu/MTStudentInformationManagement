@@ -113,7 +113,6 @@ public class StudentListFragment extends Fragment {
                             switch (dc.getType()) {
                                 case ADDED:
                                     Student addedStudent = dc.getDocument().toObject(Student.class);
-                                    addedStudent.setDocumentId(dc.getDocument().getId());
                                     studentList.add(addedStudent);
                                     break;
 
