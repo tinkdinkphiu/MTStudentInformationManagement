@@ -17,11 +17,16 @@
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
 
+    <string name="add_user_account">Add user account</string>
     <string name="add_student">Add student</string>
+
     <string name="edit_student">Edit student</string>
     <string name="student_code">Student code</string>
     <string name="code">Code</string>
     <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="status">Status</string>
+    <string name="role">Role</string>
     <string name="birthday">Birthday</string>
     <string name="address">Address</string>
     <string name="gender">Gender</string>
@@ -31,7 +36,4 @@
 
     <string name="male">Male</string>
     <string name="female">Female</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

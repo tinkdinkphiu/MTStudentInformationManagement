@@ -2,13 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_nav_student_list"
+            android:id="@+id/menu_nav_student_manager"
             android:icon="@drawable/baseline_people_alt_24"
-            android:title="Student list"/>
+            android:title="Student Manager"/>
         <item
             android:id="@+id/menu_nav_profile"
-            android:icon="@drawable/baseline_person_24"
+            android:icon="@drawable/baseline_manage_accounts_24"
             android:title="Profile"/>
+        <item
+            android:id="@+id/menu_nav_account_manager"
+            android:icon="@drawable/baseline_work_24"
+            android:title="User Manager"/>
         <item
             android:id="@+id/menu_nav_logout"
             android:icon="@drawable/baseline_logout_24"
