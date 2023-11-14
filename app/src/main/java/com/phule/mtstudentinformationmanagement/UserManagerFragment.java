@@ -44,6 +44,7 @@ public class UserManagerFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser firebaseUser;
+    private String userRole;
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
@@ -100,8 +101,10 @@ public class UserManagerFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        getCurrentFirebaseUser();
+
         userList = new ArrayList<>();
-        userAdapter = new UserAdapter(userList);
+        userAdapter = new UserAdapter(userList, this);
 
         recyclerView.setAdapter(userAdapter);
 
@@ -157,5 +160,30 @@ public class UserManagerFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void getCurrentFirebaseUser() {
+        DocumentReference df = firebaseFirestore.collection("Users").document(firebaseUser.getUid());
+        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()) {
+                    userRole = documentSnapshot.getString("role");
+                    Log.d("getUserRole", "Get user role Succeeded: " + userRole);
+                }
+                else {
+                    Log.d("getUserRole", "Get user role Failed");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("getUserRole", "Document Reference failed");
+            }
+        });
+    }
+
+    public boolean hasAuthority() {
+        return userRole.equals("admin");
     }
 }

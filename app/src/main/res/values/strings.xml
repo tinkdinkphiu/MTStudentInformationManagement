@@ -10,6 +10,7 @@
     <string name="create_new_account">Create new account</string>
     <string name="confirm_removal_title">Confirm removal</string>
     <string name="confirm_removal_msg">Do you really want to remove this student?</string>
+    <string name="confirm_removal_msg_user">Do you really want to remove this user?</string>
     <string name="confirm_removal_accept">Remove</string>
     <string name="confirm_removal_deny">Cancel</string>
 
