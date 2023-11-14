@@ -35,6 +35,8 @@
     <string name="enrollment_date">Enrollment date</string>
     <string name="major">Major</string>
 
+    <string name="edit_user">Edit user</string>
+
     <string name="male">Male</string>
     <string name="female">Female</string>
 </resources>
