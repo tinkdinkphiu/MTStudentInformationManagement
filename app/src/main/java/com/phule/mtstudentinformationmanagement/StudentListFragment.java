@@ -1,5 +1,6 @@
 package com.phule.mtstudentinformationmanagement;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +19,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,12 +42,14 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class StudentListFragment extends Fragment {
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseUser firebaseUser;
+    private String userRole;
     private RecyclerView recyclerView;
     private List<Student> studentList;
     private StudentAdapter adapter;
-    private FirebaseFirestore firestoreDB;
     private FloatingActionButton floatingActionButton;
-    ProgressDialog progressDialog;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -92,10 +99,14 @@ public class StudentListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        firestoreDB = FirebaseFirestore.getInstance();
+        // Initial firebase
+        initFirebase();
+        // Get current user;
+        getCurrentFirebaseUser();
+
         studentList = new ArrayList<>();
 
-        adapter = new StudentAdapter(studentList);
+        adapter = new StudentAdapter(studentList, this);
         recyclerView.setAdapter(adapter);
 
         EventChangeListener();
@@ -104,7 +115,7 @@ public class StudentListFragment extends Fragment {
     }
 
     private void EventChangeListener() {
-        firestoreDB.collection("Students")
+        firebaseFirestore.collection("Students")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -132,6 +143,11 @@ public class StudentListFragment extends Fragment {
                 });
     }
 
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+    }
 
     private void initUi(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -142,9 +158,47 @@ public class StudentListFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateStudentActivity.class);
-                startActivity(intent);
+                if(hasAuthority()) {
+                    Intent intent = new Intent(getActivity(), CreateStudentActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void getCurrentFirebaseUser() {
+        DocumentReference df = firebaseFirestore.collection("Users").document(firebaseUser.getUid());
+        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()) {
+                    userRole = documentSnapshot.getString("role");
+                    Log.d("getUserRole", "Get user role Succeeded: " + userRole);
+                }
+                else {
+                    Log.d("getUserRole", "Get user role Failed");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("getUserRole", "Document Reference failed");
+            }
+        });
+    }
+    
+    public boolean hasAuthority() {
+        return userRole.equals("admin") || userRole.equals("manager");
+    }
+
+    // ReloadAfterEditStudent(2) - Pass intent to MainActivity
+    public void receiveFromAdapter(Intent intent) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.editStudent(intent);
+        }
     }
 }

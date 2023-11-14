@@ -1,6 +1,7 @@
 package com.phule.mtstudentinformationmanagement;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,10 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firebaseFirestore;
-    private FirebaseUser firebaseUser;
-    private String userRole;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -51,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Load StudentListFragment by default
         changeFragment(new StudentListFragment());
-
-        // Initial firebase
-        fireBaseInitial();
-        // Get current user;
-        getCurrentFirebaseUser();
 
         // Set up navigation view listener
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -87,32 +80,6 @@ public class MainActivity extends AppCompatActivity {
         // Set "Student List" as checked by default
         navigationView.setCheckedItem(R.id.menu_nav_student_manager);
     }
-    private void fireBaseInitial() {
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-    }
-
-    private void getCurrentFirebaseUser() {
-        DocumentReference df = firebaseFirestore.collection("Users").document(firebaseUser.getUid());
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()) {
-                    userRole = documentSnapshot.getString("Role");
-                    Log.d("getUserRole", "Get user role Succeeded: " + userRole);
-                }
-                else {
-                    Log.d("getUserRole", "Get user role Failed");
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("getUserRole", "Document Reference failed");
-            }
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -143,5 +110,19 @@ public class MainActivity extends AppCompatActivity {
         // Replace current fragment
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    // ReloadAfterEditStudent(3) - Pass intent extra to EditStudentActivity
+    public void editStudent(Intent intent) {
+        startActivityForResult(intent, 98765);
+    }
+
+    // ReloadAfterEditStudent(5) - Receive from EditStudent and reload
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 98765 && resultCode == Activity.RESULT_OK) {
+            changeFragment(new StudentListFragment());
+        }
     }
 }
