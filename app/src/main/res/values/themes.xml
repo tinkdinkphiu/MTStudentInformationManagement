@@ -22,4 +22,7 @@
     </style>
 
     <style name="Theme.MTStudentInformationManagement" parent="Base.Theme.MTStudentInformationManagement" />
+    <style name="DialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 </resources>

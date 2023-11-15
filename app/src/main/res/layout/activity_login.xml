@@ -80,7 +80,7 @@
             android:backgroundTint="@color/green_primary"
             android:text="@string/sign_in"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:cornerRadius="4dp" />
 
         <Button
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
         android:textColor="@color/green_secondary"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
