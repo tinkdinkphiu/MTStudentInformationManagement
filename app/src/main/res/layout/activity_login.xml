@@ -83,14 +83,6 @@
             android:textSize="20sp"
             app:cornerRadius="4dp" />
 
-        <Button
-            android:id="@+id/btn_create_new_account"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/create_new_account"
-            android:textColor="@color/green_primary" />
-
     </LinearLayout>
 
     <TextView

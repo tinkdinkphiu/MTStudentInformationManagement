@@ -94,14 +94,12 @@ public class StudentListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
 
         initUi(view);
+        initFirebase();
         initListener();
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // Initial firebase
-        initFirebase();
-        // Get current user;
         getCurrentFirebaseUser();
 
         studentList = new ArrayList<>();

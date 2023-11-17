@@ -28,21 +28,25 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     private static StudentAdapter instance;
     private List<Student> studentList;
     private StudentListFragment studentListFragment;
+
     public StudentAdapter(List<Student> studentList, StudentListFragment studentListFragment) {
 
         this.studentList = studentList;
         this.studentListFragment = studentListFragment;
         instance = this;
     }
+
     public static StudentAdapter getInstance() {
         return instance;
     }
+
     @NonNull
     @Override
     public StudentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_student, parent, false);
         return new ViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(@NonNull StudentAdapter.ViewHolder holder, int position) {
         Student student = studentList.get(position);
@@ -57,8 +61,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        if(menuItem.getItemId() == R.id.menu_edit) {
-                            if(studentListFragment.hasAuthority()) {
+                        if (menuItem.getItemId() == R.id.menu_edit) {
+                            if (studentListFragment.hasAuthority()) {
                                 // Edit action
                                 Intent intent = new Intent(view.getContext(), EditStudentActivity.class);
                                 intent.putExtra("code", student.getCode());
@@ -71,13 +75,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                                 intent.putExtra("major", student.getMajor());
                                 // ReloadAfterEditStudent(1) - Pass intent to StudentListFragment
                                 studentListFragment.receiveFromAdapter(intent);
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(view.getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else if(menuItem.getItemId() == R.id.menu_remove) {
-                            if(studentListFragment.hasAuthority()) {
+                        } else if (menuItem.getItemId() == R.id.menu_remove) {
+                            if (studentListFragment.hasAuthority()) {
                                 // Remove action
                                 new AlertDialog.Builder(view.getContext())
                                         .setTitle(view.getContext().getString(R.string.confirm_removal_title))
@@ -125,8 +127,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                                         })
                                         .setNegativeButton(view.getContext().getString(R.string.confirm_removal_deny), null)
                                         .show();
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(view.getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -139,6 +140,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         });
 
     }
+
     @Override
     public int getItemCount() {
         return studentList.size();
@@ -146,6 +148,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView studentCode, studentName, tvOption;
+
         public ViewHolder(View itemView) {
             super(itemView);
             studentCode = itemView.findViewById(R.id.item_student_id);

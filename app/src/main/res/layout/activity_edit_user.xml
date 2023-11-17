@@ -6,35 +6,36 @@
     android:layout_height="match_parent"
     android:layout_margin="12dp"
     android:orientation="vertical"
-    tools:context=".EditStudentActivity">
+    tools:context=".EditUserActivity">
 
     <TextView
         style="@style/TextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/edit_student"
-        android:textSize="25sp"
+        android:text="@string/edit_user"
         android:textColor="@color/green_secondary"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
-    <!--    Code-->
+    <!--    Email-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_code"
+        android:id="@+id/il_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:hint="@string/student_code"
-        app:hintTextColor="@color/green_primary"
+        android:hint="@string/email"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_code"
+            android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
             android:imeOptions="actionNext"
-            android:inputType="numberDecimal"
+            android:inputType="none"
             android:lines="1"
             android:maxLength="100" />
 
@@ -57,73 +58,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLength="100" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    Birthday-->
+    <!--    Age-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_birthday"
+        android:id="@+id/il_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:hint="@string/birthday"
-        app:hintTextColor="@color/green_primary"
-        app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_birthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:inputType="date"
-            android:lines="1"
-            android:maxLength="100" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--    Address-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:hint="@string/address"
+        android:hint="@string/age"
         app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_address"
+            android:id="@+id/et_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="text"
-            android:lines="1"
-            android:maxLength="100" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--    Gender-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:hint="@string/gender"
-        app:hintTextColor="@color/green_primary"
-        app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLength="100" />
 
@@ -146,52 +104,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="phone"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLength="100" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    Enrollment date-->
+    <!--    Status-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_enrollment_date"
+        android:id="@+id/il_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:hint="@string/enrollment_date"
-        app:hintTextColor="@color/green_primary"
-        app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_enrollment_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:inputType="date"
-            android:lines="1"
-            android:maxLength="100" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--    Major-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_major"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:hint="@string/major"
+        android:hint="@string/status"
         app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_major"
+            android:id="@+id/et_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:lines="1"
+            android:maxLength="100" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--    Role-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_role"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/role"
+        app:hintTextColor="@color/green_primary"
+        app:boxStrokeColor="@color/green_primary"
+        app:boxStrokeErrorColor="@color/red"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:maxLength="100" />
 

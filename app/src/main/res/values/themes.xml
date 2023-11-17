@@ -4,6 +4,10 @@
 
     </style>
 
+    <style name="Base.Theme.MTStudentInformationManagement.NoActionbar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+    </style>
+
     <style name="TextPrimary" parent="TextAppearance.AppCompat">
         <item name="android:textColor">#FF000000</item>
         <item name="android:textSize">16sp</item>
