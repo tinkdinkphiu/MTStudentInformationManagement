@@ -25,7 +25,6 @@ public class CreateStudentActivity extends AppCompatActivity {
     private TextInputLayout ilCode, ilName, ilBirthday, ilAddress, ilGender, ilPhone, ilEnrollmentDate, ilMajor;
     private TextInputEditText etCode, etName, etBirthday, etAddress, etGender, etPhone, etEnrollmentDate, etMajor;
     private Button btnCreate;
-    private EditText dateTimeStudent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,25 +32,32 @@ public class CreateStudentActivity extends AppCompatActivity {
 
         initUi();
         initListener();
-        dateTimeStudent = findViewById(R.id.et_birthday);
-        dateTimeStudent.setShowSoftInputOnFocus(false);
-        dateTimeStudent.setCursorVisible(false);
-        dateTimeStudent.setFocusableInTouchMode(true);
+        etBirthday = findViewById(R.id.et_birthday);
+        etBirthday.setShowSoftInputOnFocus(false);
+        etBirthday.setCursorVisible(false);
+        etBirthday.setFocusableInTouchMode(true);
 
-        dateTimeStudent.setOnClickListener(new View.OnClickListener() {
+        etBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialog();
+                openDialog(etBirthday);
+            }
+        });
+
+        etEnrollmentDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog(etEnrollmentDate);
             }
         });
     }
 
-    public void openDialog() {
+    public void openDialog(final EditText editText) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog dialog = new DatePickerDialog(this, R.style.MyDatePickerDialogTheme, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                dateTimeStudent.setText(String.format("%d/%d/%d", day, month, year));
+                editText.setText(String.format("%d/%d/%d", day, month, year));
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
         dialog.setOnShowListener( new DialogInterface.OnShowListener() {

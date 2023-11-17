@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyDatePickerDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/green_primary</item> <!-- Màu sắc chủ đạo -->
+        <item name="android:textColorPrimary">@color/black</item> <!-- Màu chữ chủ đạo -->
+        <item name="android:textColorSecondary">@color/green_secondary</item> <!-- Màu chữ phụ -->
+    </style>
+    <style name="MyPositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/green_primary</item> <!-- Màu sắc chữ của nút OK -->
+    </style>
+
+    <style name="MyNegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item> <!-- Màu sắc chữ của nút Cancel -->
+    </style>
+
+</resources>
