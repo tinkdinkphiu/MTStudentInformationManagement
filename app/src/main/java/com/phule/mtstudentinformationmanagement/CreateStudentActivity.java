@@ -1,21 +1,31 @@
 package com.phule.mtstudentinformationmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
 
 public class CreateStudentActivity extends AppCompatActivity {
     private TextInputLayout ilCode, ilName, ilBirthday, ilAddress, ilGender, ilPhone, ilEnrollmentDate, ilMajor;
     private TextInputEditText etCode, etName, etBirthday, etAddress, etGender, etPhone, etEnrollmentDate, etMajor;
     private Button btnCreate;
-
+    private EditText dateTimeStudent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +33,36 @@ public class CreateStudentActivity extends AppCompatActivity {
 
         initUi();
         initListener();
+        dateTimeStudent = findViewById(R.id.et_birthday);
+        dateTimeStudent.setShowSoftInputOnFocus(false);
+        dateTimeStudent.setCursorVisible(false);
+        dateTimeStudent.setFocusableInTouchMode(true);
+
+        dateTimeStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
     }
 
+    public void openDialog() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.MyDatePickerDialogTheme, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                dateTimeStudent.setText(String.format("%d/%d/%d", day, month, year));
+            }
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+        dialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(CreateStudentActivity.this, R.color.green_primary));
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(CreateStudentActivity.this, R.color.green_primary));
+            }
+        });
+        dialog.show();
+    }
     private void initUi() {
         ilCode = findViewById(R.id.il_code);
         ilName = findViewById(R.id.il_name);
