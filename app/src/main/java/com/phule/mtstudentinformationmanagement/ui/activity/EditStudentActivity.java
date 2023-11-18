@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.phule.mtstudentinformationmanagement.R;
 
 import java.util.Calendar;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -7,17 +7,17 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.Student;
 
 import java.util.Calendar;
 

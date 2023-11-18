@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -29,29 +27,29 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Document;
+import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.Student;
+import com.phule.mtstudentinformationmanagement.adapter.StudentAdapter;
+import com.phule.mtstudentinformationmanagement.ui.activity.CreateStudentActivity;
+import com.phule.mtstudentinformationmanagement.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserManagerFragment#newInstance} factory method to
+ * Use the {@link StudentListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserManagerFragment extends Fragment {
+public class StudentListFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser firebaseUser;
     private String userRole;
-    private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
-    private UserAdapter userAdapter;
-    private List<User> userList;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private List<Student> studentList;
+    private StudentAdapter adapter;
+    private FloatingActionButton floatingActionButton;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -59,7 +57,7 @@ public class UserManagerFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public UserManagerFragment() {
+    public StudentListFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +67,11 @@ public class UserManagerFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UserManagerFragment.
+     * @return A new instance of fragment StudentListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserManagerFragment newInstance(String param1, String param2) {
-        UserManagerFragment fragment = new UserManagerFragment();
+    public static StudentListFragment newInstance(String param1, String param2) {
+        StudentListFragment fragment = new StudentListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -93,7 +91,8 @@ public class UserManagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_manager, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_list, container, false);
+
         initUi(view);
         initFirebase();
         initListener();
@@ -103,17 +102,18 @@ public class UserManagerFragment extends Fragment {
 
         getCurrentFirebaseUser();
 
-        userList = new ArrayList<>();
-        userAdapter = new UserAdapter(userList, this);
+        studentList = new ArrayList<>();
 
-        recyclerView.setAdapter(userAdapter);
+        adapter = new StudentAdapter(studentList, this);
+        recyclerView.setAdapter(adapter);
 
         EventChangeListener();
 
         return view;
     }
+
     private void EventChangeListener() {
-        firebaseFirestore.collection("Users")
+        firebaseFirestore.collection("Students")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -125,8 +125,8 @@ public class UserManagerFragment extends Fragment {
                         for (DocumentChange dc : value.getDocumentChanges()) {
                             switch (dc.getType()) {
                                 case ADDED:
-                                    User addedUsers = dc.getDocument().toObject(User.class);
-                                    userList.add(addedUsers);
+                                    Student addedStudent = dc.getDocument().toObject(Student.class);
+                                    studentList.add(addedStudent);
                                     break;
 
                                 default:
@@ -136,14 +136,9 @@ public class UserManagerFragment extends Fragment {
                         }
 
                         // Notify the adapter of changes
-                        userAdapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
                     }
                 });
-    }
-
-    private void initUi(View view) {
-        floatingActionButton = view.findViewById(R.id.fab_add_user);
-        recyclerView = view.findViewById(R.id.recycler_view);
     }
 
     private void initFirebase() {
@@ -152,12 +147,22 @@ public class UserManagerFragment extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
     }
 
+    private void initUi(View view) {
+        recyclerView = view.findViewById(R.id.recyclerView);
+        floatingActionButton = view.findViewById(R.id.fab_add_student);
+    }
+
     private void initListener() {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateUserActivity.class);
-                startActivity(intent);
+                if(hasAuthority()) {
+                    Intent intent = new Intent(getActivity(), CreateStudentActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -182,17 +187,16 @@ public class UserManagerFragment extends Fragment {
             }
         });
     }
-
+    
     public boolean hasAuthority() {
-        return userRole.equals("admin");
+        return userRole.equals("admin") || userRole.equals("manager");
     }
 
-    // ReloadAfterEditUser(2) - Pass intent to MainActivity
+    // ReloadAfterEditStudent(2) - Pass intent to MainActivity
     public void receiveFromAdapter(Intent intent) {
         if (getActivity() instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) getActivity();
             mainActivity.editStudent(intent);
-            mainActivity.setReturnToUserManagerFragment(true);
         }
     }
 }

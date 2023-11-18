@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.data.model;
 
 import com.google.firebase.firestore.PropertyName;
 

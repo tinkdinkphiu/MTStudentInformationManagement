@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.User;
+import com.phule.mtstudentinformationmanagement.ui.activity.EditUserActivity;
+import com.phule.mtstudentinformationmanagement.ui.fragment.UserManagerFragment;
 
 import java.util.List;
 
