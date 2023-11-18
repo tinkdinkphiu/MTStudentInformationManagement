@@ -54,7 +54,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                                 intent.putExtra("phone", user.getPhone());
                                 intent.putExtra("status", user.getStatus());
                                 intent.putExtra("role", user.getRole());
-                                // @TODO: continue update action
+                                // ReloadAfterEditUser(1) - Pass intent to UserListFragment
+                                userManagerFragment.receiveFromAdapter(intent);
                             }
                             else {
                                 Toast.makeText(view.getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();

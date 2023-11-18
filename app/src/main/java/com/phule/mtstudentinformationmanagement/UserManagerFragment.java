@@ -186,4 +186,13 @@ public class UserManagerFragment extends Fragment {
     public boolean hasAuthority() {
         return userRole.equals("admin");
     }
+
+    // ReloadAfterEditUser(2) - Pass intent to MainActivity
+    public void receiveFromAdapter(Intent intent) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.editStudent(intent);
+            mainActivity.setReturnToUserManagerFragment(true);
+        }
+    }
 }

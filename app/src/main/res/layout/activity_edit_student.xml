@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/edit_student"
-        android:textSize="25sp"
         android:textColor="@color/green_secondary"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <!--    Code-->
     <com.google.android.material.textfield.TextInputLayout
@@ -24,15 +24,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/student_code"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="false"
+            android:focusable="false"
             android:imeOptions="actionNext"
             android:inputType="numberDecimal"
             android:lines="1"
@@ -47,10 +49,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/name"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
@@ -70,9 +72,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/birthday"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
+        app:boxStrokeErrorColor="@color/red"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_birthday"
@@ -92,10 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/address"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_address"
@@ -115,9 +117,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/gender"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
+        app:boxStrokeErrorColor="@color/red"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_gender"
@@ -136,10 +138,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/phone"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_phone"
@@ -159,9 +161,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/enrollment_date"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
+        app:boxStrokeErrorColor="@color/red"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_enrollment_date"
@@ -181,10 +183,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/major"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_major"
@@ -200,19 +202,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/btn_save"
+        style="@style/TextPrimaryOpposite"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        style="@style/TextPrimaryOpposite"
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/green_primary"
         android:text="@string/save"
-        android:textSize="20sp"
         android:textColor="@color/white"
-        app:cornerRadius="4dp"/>
+        android:textSize="20sp"
+        app:cornerRadius="4dp" />
 
 </LinearLayout>

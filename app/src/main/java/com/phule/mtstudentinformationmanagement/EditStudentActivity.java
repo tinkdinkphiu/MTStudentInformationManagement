@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditStudentActivity extends AppCompatActivity {
-    FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore;
     private TextInputLayout ilCode, ilName, ilBirthday, ilAddress, ilGender, ilPhone, ilEnrollmentDate, ilMajor;
     private TextInputEditText etCode, etName, etBirthday, etAddress, etGender, etPhone, etEnrollmentDate, etMajor;
     private Button btnSave;
