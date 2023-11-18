@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,12 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import org.w3c.dom.Text;
+import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.Student;
+import com.phule.mtstudentinformationmanagement.ui.activity.EditStudentActivity;
+import com.phule.mtstudentinformationmanagement.ui.fragment.StudentListFragment;
 
 import java.util.List;
 

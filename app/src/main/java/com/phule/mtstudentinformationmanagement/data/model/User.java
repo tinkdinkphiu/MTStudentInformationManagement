@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.data.model;
 
 public class User {
     private String email;

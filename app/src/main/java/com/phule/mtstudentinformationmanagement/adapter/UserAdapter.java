@@ -1,4 +1,4 @@
-package com.phule.mtstudentinformationmanagement;
+package com.phule.mtstudentinformationmanagement.adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.User;
+import com.phule.mtstudentinformationmanagement.ui.activity.EditUserActivity;
+import com.phule.mtstudentinformationmanagement.ui.fragment.UserManagerFragment;
 
 import java.util.List;
 
@@ -54,7 +59,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                                 intent.putExtra("phone", user.getPhone());
                                 intent.putExtra("status", user.getStatus());
                                 intent.putExtra("role", user.getRole());
-                                // @TODO: continue update action
+                                // ReloadAfterEditUser(1) - Pass intent to UserListFragment
+                                userManagerFragment.receiveFromAdapter(intent);
                             }
                             else {
                                 Toast.makeText(view.getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();

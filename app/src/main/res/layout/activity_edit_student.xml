@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:layout_margin="12dp"
     android:orientation="vertical"
-    tools:context=".EditStudentActivity">
+    tools:context=".ui.activity.EditStudentActivity">
 
     <TextView
         style="@style/TextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/edit_student"
-        android:textSize="25sp"
         android:textColor="@color/green_secondary"
-        android:textStyle="bold"/>
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <!--    Code-->
     <com.google.android.material.textfield.TextInputLayout
@@ -24,15 +24,19 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/student_code"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:enabled="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:imeOptions="actionNext"
             android:inputType="numberDecimal"
             android:lines="1"
@@ -47,10 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/name"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
@@ -63,39 +67,79 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    Birthday-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_birthday"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:hint="@string/birthday"
-        app:hintTextColor="@color/green_primary"
-        app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_birthday"
-            android:layout_width="match_parent"
+        <!--   Birthday-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_birthday"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:inputType="date"
-            android:lines="1"
-            android:maxLength="100" />
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:hint="@string/birthday"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:hintTextColor="@color/green_primary">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:imeOptions="actionNext"
+                android:inputType="date"
+                android:lines="1"
+                android:maxLength="100"
+                android:text="@string/initial_birthday" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Gender-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:hint="@string/gender"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:hintTextColor="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:imeOptions="actionNext"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <!--    Address-->
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/il_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/address"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_address"
@@ -108,27 +152,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    Gender-->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/il_gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:hint="@string/gender"
-        app:hintTextColor="@color/green_primary"
-        app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionNext"
-            android:lines="1"
-            android:maxLength="100" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <!--    Phone-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/il_phone"
@@ -136,10 +159,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/phone"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_phone"
@@ -159,18 +182,22 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/enrollment_date"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
-        app:boxStrokeErrorColor="@color/red">
+        app:boxStrokeErrorColor="@color/red"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_enrollment_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:imeOptions="actionNext"
             android:inputType="date"
             android:lines="1"
-            android:maxLength="100" />
+            android:maxLength="100"
+            android:text="@string/initial_enrollment" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,15 +208,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/major"
-        app:hintTextColor="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_major"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:lines="1"
@@ -200,19 +228,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/btn_save"
+        style="@style/TextPrimaryOpposite"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        style="@style/TextPrimaryOpposite"
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/green_primary"
         android:text="@string/save"
-        android:textSize="20sp"
         android:textColor="@color/white"
-        app:cornerRadius="4dp"/>
+        android:textSize="20sp"
+        app:cornerRadius="4dp" />
 
 </LinearLayout>
