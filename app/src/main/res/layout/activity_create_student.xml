@@ -9,12 +9,20 @@
     tools:context=".ui.activity.CreateStudentActivity">
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_close_24"
+        android:text="" />
+
+    <TextView
         style="@style/TextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_student"
+        android:textAllCaps="true"
         android:textColor="@color/green_secondary"
-        android:textSize="25sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <!--    Code-->
