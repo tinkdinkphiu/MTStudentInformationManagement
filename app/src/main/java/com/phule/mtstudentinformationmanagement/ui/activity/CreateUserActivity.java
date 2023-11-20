@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.helper.DialogHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,17 +30,22 @@ public class CreateUserActivity extends AppCompatActivity {
     private TextInputLayout ilEmail, ilPassword, ilName, ilAge, ilPhone, ilStatus, ilRole;
     private TextInputEditText etEmail, etPassword, etName, etAge, etPhone, etStatus, etRole;
     private Button btnCreate;
+    private DialogHelper dialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        dialogHelper = new DialogHelper(this);
 
+        initFirebase();
         initUi();
         initListener();
+    }
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     private void initUi() {
@@ -94,6 +100,18 @@ public class CreateUserActivity extends AppCompatActivity {
                                 Log.e("UserCreation", "Error: " + e.getMessage());
                             }
                         });
+            }
+        });
+        etStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogHelper.openStatusDialog(etStatus);
+            }
+        });
+        etRole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogHelper.openRoleDialog(etRole);
             }
         });
     }

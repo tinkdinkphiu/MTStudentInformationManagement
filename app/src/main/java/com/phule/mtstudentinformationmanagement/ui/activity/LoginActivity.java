@@ -3,6 +3,7 @@ package com.phule.mtstudentinformationmanagement.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.phule.mtstudentinformationmanagement.R;
 
 public class LoginActivity extends AppCompatActivity {
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
     private TextInputLayout ilEmail, ilPassword;
     private TextInputEditText etEmail, etPassword;
     private Button btnSignin;
@@ -29,8 +34,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initFirebase();
         initUi();
         initListener();
+    }
+    private void initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     private void initUi() {
@@ -51,31 +61,58 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onClickSignIn() {
-        // @TODO: validate users' input, email empty -> crash app
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("loginUserSuccess", "signInWithEmail:success");
+        if(email.isEmpty() || password.isEmpty()) {
+            Log.d("loginUser", "Empty email or password");
+            Toast.makeText(LoginActivity.this, "Please enter Email and Password", Toast.LENGTH_SHORT).show();
+        } else {
+            ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
 
-                            FirebaseUser user = auth.getCurrentUser();
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d("loginUserSuccess", "signInWithEmail:success");
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finishAffinity();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("loginUserFailed", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                                firebaseFirestore.collection("Users").document(user.getUid())
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                progressDialog.dismiss();
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        String status = document.getString("status");
+                                                        if (status.equals("Locked")) {
+                                                            firebaseAuth.signOut();
+                                                            Toast.makeText(LoginActivity.this, "Account Locked", Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                            startActivity(intent);
+                                                            finishAffinity();
+                                                        }
+                                                    } else {
+                                                        Log.d("loginUserFailed", "No such document");
+                                                    }
+                                                } else {
+                                                    Log.d("loginUserFailed", "get failed with ", task.getException());
+                                                }
+                                            }
+                                        });
+                            } else {
+                                progressDialog.dismiss();
+                                Log.w("loginUserFailed", "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Sign in failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 }

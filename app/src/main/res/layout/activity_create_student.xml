@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/student_code"
+        android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
@@ -55,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/name"
+        android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
@@ -85,6 +87,7 @@
             android:layout_marginBottom="12dp"
             android:layout_weight="1"
             android:hint="@string/birthday"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:hintTextColor="@color/green_primary">
@@ -112,6 +115,7 @@
             android:layout_marginBottom="12dp"
             android:layout_weight="1"
             android:hint="@string/gender"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:hintTextColor="@color/green_primary">
@@ -125,7 +129,8 @@
                 android:focusableInTouchMode="false"
                 android:imeOptions="actionNext"
                 android:lines="1"
-                android:maxLength="100" />
+                android:maxLength="100"
+                android:text="@string/male" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,6 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/address"
+        android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
@@ -163,6 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/phone"
+        android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
@@ -186,6 +193,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/enrollment_date"
+        android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:hintTextColor="@color/green_primary">
@@ -212,6 +220,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:hint="@string/major"
+        android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
