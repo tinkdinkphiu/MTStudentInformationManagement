@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.helper.DialogHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class EditUserActivity extends AppCompatActivity {
     private TextInputEditText etEmail, etName, etAge, etPhone, etStatus, etRole;
     private Button btnSave;
     private String originalEmail;
+    private DialogHelper dialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
 
         Intent intent = getIntent();
+
+        dialogHelper = new DialogHelper(this);
 
         initialFirebase();
         initUi();
@@ -81,6 +85,18 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onSaveClick();
+            }
+        });
+        etStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogHelper.openStatusDialog(etStatus);
+            }
+        });
+        etRole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogHelper.openRoleDialog(etRole);
             }
         });
     }

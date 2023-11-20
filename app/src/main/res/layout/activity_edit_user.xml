@@ -26,7 +26,8 @@
         android:hint="@string/email"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary">
+        app:hintTextColor="@color/green_primary"
+        android:textColorHint="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
@@ -52,7 +53,8 @@
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
-        app:hintTextColor="@color/green_primary">
+        app:hintTextColor="@color/green_primary"
+        android:textColorHint="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
@@ -75,7 +77,8 @@
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
-        app:hintTextColor="@color/green_primary">
+        app:hintTextColor="@color/green_primary"
+        android:textColorHint="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_age"
@@ -98,7 +101,8 @@
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
-        app:hintTextColor="@color/green_primary">
+        app:hintTextColor="@color/green_primary"
+        android:textColorHint="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_phone"
@@ -121,12 +125,16 @@
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
-        app:hintTextColor="@color/green_primary">
+        app:hintTextColor="@color/green_primary"
+        android:textColorHint="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:lines="1"
@@ -144,12 +152,16 @@
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
         app:endIconMode="clear_text"
-        app:hintTextColor="@color/green_primary">
+        app:hintTextColor="@color/green_primary"
+        android:textColorHint="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:lines="1"

@@ -189,7 +189,7 @@ public class StudentListFragment extends Fragment {
     }
     
     public boolean hasAuthority() {
-        return userRole.equals("admin") || userRole.equals("manager");
+        return userRole.equals("Admin") || userRole.equals("Manager");
     }
 
     // ReloadAfterEditStudent(2) - Pass intent to MainActivity

@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.phule.mtstudentinformationmanagement.R;
 import com.phule.mtstudentinformationmanagement.data.model.Student;
+import com.phule.mtstudentinformationmanagement.ui.activity.DetailsStudentActivity;
 import com.phule.mtstudentinformationmanagement.ui.activity.EditStudentActivity;
 import com.phule.mtstudentinformationmanagement.ui.fragment.StudentListFragment;
 
@@ -61,7 +62,20 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        if (menuItem.getItemId() == R.id.menu_edit) {
+                        if(menuItem.getItemId() == R.id.menu_details) {
+                            // See details action
+                            Intent intent = new Intent(view.getContext(), DetailsStudentActivity.class);
+                            intent.putExtra("code", student.getCode());
+                            intent.putExtra("name", student.getName());
+                            intent.putExtra("birthday", student.getBirthday());
+                            intent.putExtra("address", student.getAddress());
+                            intent.putExtra("gender", student.getGender());
+                            intent.putExtra("phone", student.getPhone());
+                            intent.putExtra("enrollmentDate", student.getEnrollmentDate());
+                            intent.putExtra("major", student.getMajor());
+                            view.getContext().startActivity(intent);
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_edit) {
                             if (studentListFragment.hasAuthority()) {
                                 // Edit action
                                 Intent intent = new Intent(view.getContext(), EditStudentActivity.class);

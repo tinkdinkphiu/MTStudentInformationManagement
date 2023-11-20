@@ -3,6 +3,15 @@
 
     <string name="dots_3_vertical">&#8942;</string>
 
+    <string name="menu_student_manager">Student Manager</string>
+    <string name="menu_user_manager">User Manager</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_logout">Log out</string>
+
+    <string name="menu_details">Details</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_remove">Remove</string>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="create">Create</string>
@@ -23,6 +32,10 @@
     <string name="add_student">Add student</string>
 
     <string name="edit_student">Edit student</string>
+    <string name="edit_user">Edit user</string>
+
+    <string name="details_student">Student details</string>
+
     <string name="student_code">Student code</string>
     <string name="code">Code</string>
     <string name="name">Name</string>
@@ -36,7 +49,6 @@
     <string name="enrollment_date">Enrollment date</string>
     <string name="major">Major</string>
 
-    <string name="edit_user">Edit user</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>

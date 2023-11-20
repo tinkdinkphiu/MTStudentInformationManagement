@@ -184,7 +184,7 @@ public class UserManagerFragment extends Fragment {
     }
 
     public boolean hasAuthority() {
-        return userRole.equals("admin");
+        return userRole.equals("Admin");
     }
 
     // ReloadAfterEditUser(2) - Pass intent to MainActivity
