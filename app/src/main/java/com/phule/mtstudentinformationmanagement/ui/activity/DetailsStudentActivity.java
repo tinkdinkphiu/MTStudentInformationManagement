@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.phule.mtstudentinformationmanagement.R;
 
 public class DetailsStudentActivity extends AppCompatActivity {
-    private TextView tvCode, tvName, tvBirthday, tvGender, tvAddress, tvPhone, tvEnrollmentDate, tvMajor;
+    private TextView tvCode, tvName, tvBirthday, tvGender, tvAddress, tvPhone, tvEnrollmentDate, tvMajor, tvClose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class DetailsStudentActivity extends AppCompatActivity {
 
         initUi();
         populateField(code, name, birthday, address, gender, phone, enrollmentDate, major);
+        initListener();
     }
     private void initUi() {
         tvCode = findViewById(R.id.tv_code);
@@ -39,6 +41,7 @@ public class DetailsStudentActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.tv_phone);
         tvEnrollmentDate = findViewById(R.id.tv_enrollmentDate);
         tvMajor = findViewById(R.id.tv_major);
+        tvClose = findViewById(R.id.tv_close);
     }
 
     private void populateField(String code, String name, String birthday, String address, String gender, String phone, String enrollmentDate, String major) {
@@ -50,5 +53,14 @@ public class DetailsStudentActivity extends AppCompatActivity {
         tvPhone.setText(phone);
         tvEnrollmentDate.setText(enrollmentDate);
         tvMajor.setText(major);
+    }
+
+    private void initListener() {
+        tvClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }
