@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -24,11 +25,9 @@ import java.util.List;
 
 public class DetailsStudentActivity extends AppCompatActivity {
     private TextView tvCode, tvName, tvBirthday, tvGender, tvAddress, tvPhone, tvEnrollmentDate, tvMajor, tvClose;
-    private RecyclerView recyclerView;
     private String studentCode;
-    private CertificateAdapter certificateAdapter;
     private FirebaseFirestore firebaseFirestore;
-    private List<Certificate> certificateList;
+    private LinearLayout linearCertificate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +45,13 @@ public class DetailsStudentActivity extends AppCompatActivity {
         String enrollmentDate = intent.getStringExtra("enrollmentDate");
         String major = intent.getStringExtra("major");
 
-        initUi();
-        initRecyclerView();
         initFirebase();
+        initUi();
         populateField(studentCode, name, birthday, address, gender, phone, enrollmentDate, major);
         initListener();
     }
     private void initFirebase() {
         firebaseFirestore = FirebaseFirestore.getInstance();
-    }
-    private void initRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        certificateAdapter = new CertificateAdapter(new ArrayList<>());
-        recyclerView.setAdapter(certificateAdapter);
-    }
-    private void updateRecyclerView(List<Certificate> certificateList) {
-        certificateAdapter.updateCertificatesList(certificateList);
     }
     private void initUi() {
         tvCode = findViewById(R.id.tv_code);
@@ -73,9 +63,7 @@ public class DetailsStudentActivity extends AppCompatActivity {
         tvEnrollmentDate = findViewById(R.id.tv_enrollmentDate);
         tvMajor = findViewById(R.id.tv_major);
         tvClose = findViewById(R.id.tv_close);
-
-        recyclerView = findViewById(R.id.recycler_view);
-        certificateList = new ArrayList<>();
+        linearCertificate = findViewById(R.id.linear_certificate);
     }
     private void populateField(String code, String name, String birthday, String address, String gender, String phone, String enrollmentDate, String major) {
         tvCode.setText(code);
@@ -98,25 +86,6 @@ public class DetailsStudentActivity extends AppCompatActivity {
         });
     }
     private void getCertificates() {
-        firebaseFirestore.collection("Students").document(studentCode)
-                .collection("Certificate")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().isEmpty()) {
-                            Log.d("getCertificates", "No certificates found");
-                        } else {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Certificate certificate = document.toObject(Certificate.class);
-                                certificateList.add(certificate);
-                                Log.d("getCertificates", "Certificate: " + certificate.getCertiName());
-                            }
-                            certificateAdapter.updateCertificatesList(certificateList);
-                        }
-                    } else {
-                        Log.d("getCertificates", "Error getting certificates: ", task.getException());
-                    }
-                });
         firebaseFirestore.collection("Students").whereEqualTo("code", studentCode).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -124,17 +93,14 @@ public class DetailsStudentActivity extends AppCompatActivity {
                         if (studentsSnapshot != null && !studentsSnapshot.isEmpty()) {
                             for (DocumentSnapshot studentDocument : studentsSnapshot.getDocuments()) {
                                 CollectionReference certificatesCollection = studentDocument.getReference().collection("Certificates");
-
                                 certificatesCollection.get().addOnCompleteListener(certificatesTask -> {
                                     if (certificatesTask.isSuccessful()) {
                                         QuerySnapshot certificatesSnapshot = certificatesTask.getResult();
                                         if (certificatesSnapshot != null && !certificatesSnapshot.isEmpty()) {
                                             for (DocumentSnapshot certificateDocument : certificatesSnapshot.getDocuments()) {
                                                 Certificate certificate = certificateDocument.toObject(Certificate.class);
-                                                certificateList.add(certificate);
+                                                addCertificateToLinearLayout(certificate);
                                             }
-                                            // Update RecyclerView Adapter
-                                            certificateAdapter.updateCertificatesList(certificateList);
                                         } else {
                                             Log.d("Certificates", "No certificates found for this student");
                                         }
@@ -151,5 +117,21 @@ public class DetailsStudentActivity extends AppCompatActivity {
                     }
                 });
     }
+    private void addCertificateToLinearLayout(Certificate certificate) {
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
 
+        TextView textViewName = new TextView(this);
+        textViewName.setText(certificate.getCertiName());
+        textViewName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        TextView textViewScore = new TextView(this);
+        textViewScore.setText(String.valueOf(certificate.getCertiScore()));
+        textViewScore.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        linearLayout.addView(textViewName);
+        linearLayout.addView(textViewScore);
+
+        linearCertificate.addView(linearLayout);
+    }
 }

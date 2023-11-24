@@ -57,7 +57,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), holder.tvOption);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_item_option, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.menu_item_student_option, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override

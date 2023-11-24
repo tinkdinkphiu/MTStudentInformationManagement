@@ -66,7 +66,8 @@ public class DialogHelper {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select Major");
         final String[] majorOptions = {
-                // ... your major options here
+                "IT",
+                "Marketing"
         };
         builder.setItems(majorOptions, new DialogInterface.OnClickListener() {
             @Override

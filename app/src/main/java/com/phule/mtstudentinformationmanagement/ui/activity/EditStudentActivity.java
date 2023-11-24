@@ -15,13 +15,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.Certificate;
 import com.phule.mtstudentinformationmanagement.helper.DialogHelper;
 
 import java.util.Calendar;
@@ -32,7 +38,8 @@ public class EditStudentActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private TextInputLayout ilCode, ilName, ilBirthday, ilAddress, ilGender, ilPhone, ilEnrollmentDate, ilMajor;
     private TextInputEditText etCode, etName, etBirthday, etAddress, etGender, etPhone, etEnrollmentDate, etMajor;
-    private Button btnSave;
+    private TextView tvClose;
+    private Button btnSave, btnCertificate;
     private String originalCode;
     private DialogHelper dialogHelper;
 
@@ -88,7 +95,10 @@ public class EditStudentActivity extends AppCompatActivity {
         etBirthday.setShowSoftInputOnFocus(false);
         etEnrollmentDate.setShowSoftInputOnFocus(false);
 
+        tvClose = findViewById(R.id.tv_close);
+
         btnSave = findViewById(R.id.btn_save);
+        btnCertificate = findViewById(R.id.btn_certificate);
     }
 
     private void populateField(String code, String name, String birthday, String address, String gender, String phone, String enrollmentDate, String major) {
@@ -107,6 +117,14 @@ public class EditStudentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onSaveClick();
+            }
+        });
+        btnCertificate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditStudentActivity.this, ManageCertificateActivity.class);
+                intent.putExtra("originalCode", originalCode);
+                startActivity(intent);
             }
         });
         etBirthday.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +149,12 @@ public class EditStudentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dialogHelper.openMajorDialog(etMajor);
+            }
+        });
+        tvClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
