@@ -3,12 +3,200 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:id="@+id/btnAvatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/baseline_person_24"
+            android:background="#f2e8cf"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin cá nhân"
+            android:gravity="center"
+            android:textSize="24dp"
+            android:layout_marginTop="24dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginHorizontal="12dp"
+            android:hint="@string/email"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:hintTextColor="@color/green_primary"
+            android:textColorHint="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:imeOptions="actionNext"
+                android:inputType="none"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Name-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:hint="@string/name"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/green_primary"
+            android:textColorHint="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Age-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:hint="@string/age"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/green_primary"
+            android:textColorHint="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Phone-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:hint="@string/phone"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/green_primary"
+            android:textColorHint="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Status-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:hint="@string/status"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/green_primary"
+            android:textColorHint="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:clickable="false"
+                android:enabled="false"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--    Role-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/il_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="12dp"
+            android:hint="@string/role"
+            app:boxStrokeColor="@color/green_primary"
+            app:boxStrokeErrorColor="@color/red"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/green_primary"
+            android:textColorHint="@color/green_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:clickable="false"
+                android:enabled="false"
+                android:lines="1"
+                android:maxLength="100" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
