@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -69,8 +70,8 @@ public class ManageCertificateActivity extends AppCompatActivity {
             LayoutInflater inflater = this.getLayoutInflater();
             View view = inflater.inflate(R.layout.dialog_add_certificate, null);
 
-            EditText etCertiName = view.findViewById(R.id.et_certificate_name);
-            EditText etCertiScore = view.findViewById(R.id.et_certificate_score);
+            TextInputEditText etCertiName = view.findViewById(R.id.et_certificate_name);
+            TextInputEditText etCertiScore = view.findViewById(R.id.et_certificate_score);
 
             builder.setView(view);
 
