@@ -36,6 +36,7 @@
     <string name="edit_user">Edit user</string>
 
     <string name="details_student">Student details</string>
+    <string name="details_user">User details</string>
 
     <string name="student_code">Student code</string>
     <string name="code">Code</string>
