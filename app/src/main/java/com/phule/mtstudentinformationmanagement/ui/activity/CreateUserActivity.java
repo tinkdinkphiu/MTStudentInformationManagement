@@ -79,7 +79,9 @@ public class CreateUserActivity extends AppCompatActivity {
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
                                 Toast.makeText(CreateUserActivity.this, "User created", Toast.LENGTH_SHORT).show();
 
-                                DocumentReference df = firebaseFirestore.collection("Users").document(user.getUid());
+
+
+                                DocumentReference documentReference = firebaseFirestore.collection("Users").document(user.getUid());
                                 Map<String, Object> userInfo = new HashMap<>();
                                 userInfo.put("email", etEmail.getText().toString());
                                 userInfo.put("name", etName.getText().toString());
@@ -88,7 +90,7 @@ public class CreateUserActivity extends AppCompatActivity {
                                 userInfo.put("status", etStatus.getText().toString());
                                 userInfo.put("role", etRole.getText().toString());
 
-                                df.set(userInfo);
+                                documentReference.set(userInfo);
 
                                 finish();
                             }

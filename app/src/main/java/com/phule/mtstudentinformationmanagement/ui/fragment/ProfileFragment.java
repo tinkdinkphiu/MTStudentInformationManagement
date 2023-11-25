@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phule.mtstudentinformationmanagement.R;
 import com.phule.mtstudentinformationmanagement.helper.DialogHelper;
-import com.phule.mtstudentinformationmanagement.ui.activity.ChangeAvatarActivity;
+/*import com.phule.mtstudentinformationmanagement.ui.activity.ChangeAvatarActivity;*/
 
 public class ProfileFragment extends Fragment {
     private final int GALLERY_REQ_CODE = 1000;
