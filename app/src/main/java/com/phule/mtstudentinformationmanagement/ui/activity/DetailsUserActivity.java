@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.phule.mtstudentinformationmanagement.R;
 
 public class DetailsUserActivity extends AppCompatActivity {
@@ -28,6 +31,8 @@ public class DetailsUserActivity extends AppCompatActivity {
         String status = intent.getStringExtra("status");
 
         populateField(email, name, age, phone, role, status);
+
+
     }
     private void initUi() {
         tvEmail = findViewById(R.id.tv_email);

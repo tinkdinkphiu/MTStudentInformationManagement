@@ -3,6 +3,7 @@ package com.phule.mtstudentinformationmanagement.adapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,14 +14,21 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.phule.mtstudentinformationmanagement.R;
 import com.phule.mtstudentinformationmanagement.data.model.User;
+import com.phule.mtstudentinformationmanagement.helper.RetrofitClient;
+import com.phule.mtstudentinformationmanagement.helper.UserApiService;
 import com.phule.mtstudentinformationmanagement.ui.activity.DetailsStudentActivity;
 import com.phule.mtstudentinformationmanagement.ui.activity.DetailsUserActivity;
 import com.phule.mtstudentinformationmanagement.ui.activity.EditUserActivity;
 import com.phule.mtstudentinformationmanagement.ui.fragment.UserManagerFragment;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private UserManagerFragment userManagerFragment;
@@ -86,7 +94,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                                         .setIcon(view.getContext().getDrawable(R.drawable.baseline_warning_24))
                                         .setPositiveButton(view.getContext().getString(R.string.confirm_removal_accept), new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                // Remove user from Firestore
+                                                // Remove user
+                                                UserApiService service = RetrofitClient.getService();
+                                                Call<UserApiService.ApiResponse> call = service.deleteUser(new UserApiService.UserRespone(user.getEmail()));
+
+                                                call.enqueue(new Callback<UserApiService.ApiResponse>() {
+                                                    @Override
+                                                    public void onResponse(Call<UserApiService.ApiResponse> call, Response<UserApiService.ApiResponse> response) {
+                                                        if(response.isSuccessful()) {
+                                                            // Handle response
+                                                            UserApiService.ApiResponse apiResponse = response.body();
+                                                            Log.d("Response", "Success: " + apiResponse.success + ", Message: " + apiResponse.message);
+                                                        } else {
+                                                            // Handle request errors depending on status code
+                                                            Log.d("Response", "Error: " + response.code() + response.message());
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<UserApiService.ApiResponse> call, Throwable t) {
+                                                        Log.d("Response", "Failure: " + t.getMessage());
+                                                    }
+                                                });
 
                                             }
                                         })
