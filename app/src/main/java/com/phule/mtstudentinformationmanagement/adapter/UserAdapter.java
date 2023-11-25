@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phule.mtstudentinformationmanagement.R;
 import com.phule.mtstudentinformationmanagement.data.model.User;
+import com.phule.mtstudentinformationmanagement.ui.activity.DetailsStudentActivity;
+import com.phule.mtstudentinformationmanagement.ui.activity.DetailsUserActivity;
 import com.phule.mtstudentinformationmanagement.ui.activity.EditUserActivity;
 import com.phule.mtstudentinformationmanagement.ui.fragment.UserManagerFragment;
 
@@ -44,12 +46,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(view.getContext(), holder.tvOption);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_item_option, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.menu_item_student_option, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        if (menuItem.getItemId() == R.id.menu_edit) {
+                        if(menuItem.getItemId() == R.id.menu_details) {
+                            // See details action
+                            Intent intent = new Intent(view.getContext(), DetailsUserActivity.class);
+                            intent.putExtra("email", user.getEmail());
+                            intent.putExtra("name", user.getName());
+                            intent.putExtra("age", user.getAge());
+                            intent.putExtra("phone", user.getPhone());
+                            intent.putExtra("role", user.getRole());
+                            intent.putExtra("status", user.getStatus());
+                            view.getContext().startActivity(intent);
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_edit) {
                             if(userManagerFragment.hasAuthority()) {
                                 // Edit action
                                 Intent intent = new Intent(view.getContext(), EditUserActivity.class);

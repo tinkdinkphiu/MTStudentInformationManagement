@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="12dp"
+    android:padding="12dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_certificate_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/certificate_name"
+        android:textColorHint="@color/green_primary"
+        app:boxStrokeColor="@color/green_primary"
+        app:boxStrokeErrorColor="@color/red"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_certificate_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="100" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/il_certificate_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/certificate_score"
+        android:textColorHint="@color/green_primary"
+        app:boxStrokeColor="@color/green_primary"
+        app:boxStrokeErrorColor="@color/red"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_certificate_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="100" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

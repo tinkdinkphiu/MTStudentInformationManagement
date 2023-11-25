@@ -19,6 +19,7 @@
     <string name="create_new_account">Create new account</string>
     <string name="confirm_removal_title">Confirm removal</string>
     <string name="confirm_removal_msg">Do you really want to remove this student?</string>
+    <string name="confirm_removal_msg_certificate">Do you really want to remove this certificate from this student?</string>
     <string name="confirm_removal_msg_user">Do you really want to remove this user?</string>
     <string name="confirm_removal_accept">Remove</string>
     <string name="confirm_removal_deny">Cancel</string>
@@ -35,6 +36,7 @@
     <string name="edit_user">Edit user</string>
 
     <string name="details_student">Student details</string>
+    <string name="details_user">User details</string>
 
     <string name="student_code">Student code</string>
     <string name="code">Code</string>
@@ -49,6 +51,10 @@
     <string name="enrollment_date">Enrollment date</string>
     <string name="major">Major</string>
 
+    <string name="manage_certificate">Manage certificate</string>
+    <string name="certificate">Certificate</string>
+    <string name="certificate_name">Certificate name</string>
+    <string name="certificate_score">Certificate score</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>

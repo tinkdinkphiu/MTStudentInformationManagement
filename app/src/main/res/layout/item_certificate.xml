@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
+
+    <TextView
+        android:id="@+id/item_tv_option"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:text="@string/dots_3_vertical"
+        android:textSize="24sp"
+        android:layout_gravity="right"
+        android:textAlignment="center"
+        tools:ignore="RtlCompat,RtlHardcoded" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/item_certificate_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:text="TOEIC"/>
+
+        <TextView
+            android:id="@+id/item_certificate_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:text="800"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
