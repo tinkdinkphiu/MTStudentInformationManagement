@@ -9,12 +9,20 @@
     tools:context=".ui.activity.DetailsUserActivity">
 
     <TextView
+        android:id="@+id/tv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_close_24"
+        android:text="" />
+
+
+    <TextView
         style="@style/TextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="90dp"
         android:text="@string/details_user"
         android:textAllCaps="true"
+        android:textColor="@color/green_secondary"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -32,32 +40,44 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
                 android:text="@string/email"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
                 android:text="@string/name"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
                 android:text="@string/age"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
                 android:text="@string/phone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
                 android:text="@string/role"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
                 android:text="@string/status"/>
         </LinearLayout>
         <LinearLayout
@@ -70,37 +90,55 @@
                 android:id="@+id/tv_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/email"/>
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/name"/>
             <TextView
                 android:id="@+id/tv_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/age"/>
             <TextView
                 android:id="@+id/tv_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/phone"/>
             <TextView
                 android:id="@+id/tv_role"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/role"/>
             <TextView
                 android:id="@+id/tv_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                style="@style/TextPrimary"
+                android:paddingVertical="5dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="@string/status"/>
         </LinearLayout>
     </LinearLayout>
