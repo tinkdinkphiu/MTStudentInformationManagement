@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +25,10 @@ import com.phule.mtstudentinformationmanagement.ui.activity.DetailsStudentActivi
 import com.phule.mtstudentinformationmanagement.ui.activity.EditStudentActivity;
 import com.phule.mtstudentinformationmanagement.ui.fragment.StudentListFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> implements Filterable {
     private static StudentAdapter instance;
     private List<Student> studentList;
     private StudentListFragment studentListFragment;
@@ -169,5 +172,40 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             studentName = itemView.findViewById(R.id.item_student_name);
             tvOption = itemView.findViewById(R.id.item_tv_option);
         }
+    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Student> filteredList = new ArrayList<>();
+
+                if (constraint == null || constraint.length() == 0) {
+                    // Return all students if == null or empty
+                    filteredList.addAll(studentList);
+                } else {
+                    // Perform search
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+                    for (Student item : studentList) {
+                        if (item.getName().toLowerCase().contains(filterPattern) ||
+                                item.getCode().toLowerCase().contains(filterPattern) ||
+                                item.getMajor().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                studentList.clear();
+                studentList.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
     }
 }

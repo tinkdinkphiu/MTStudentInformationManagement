@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,11 +37,6 @@ import com.phule.mtstudentinformationmanagement.ui.activity.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StudentListFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -48,8 +44,10 @@ public class StudentListFragment extends Fragment {
     private String userRole;
     private RecyclerView recyclerView;
     private List<Student> studentList;
+    private List<Student> originalStudentList;
     private StudentAdapter adapter;
     private FloatingActionButton floatingActionButton;
+    private SearchView searchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +69,12 @@ public class StudentListFragment extends Fragment {
         getCurrentFirebaseUser();
 
         studentList = new ArrayList<>();
+        originalStudentList = new ArrayList<>();
+
+        // Add all students to originalStudentList
+        for (Student student : studentList) {
+            originalStudentList.add(student);
+        }
 
         adapter = new StudentAdapter(studentList, this);
         recyclerView.setAdapter(adapter);
@@ -79,6 +83,7 @@ public class StudentListFragment extends Fragment {
 
         return view;
     }
+
 
     private void EventChangeListener() {
         firebaseFirestore.collection("Students")
@@ -95,6 +100,7 @@ public class StudentListFragment extends Fragment {
                                 case ADDED:
                                     Student addedStudent = dc.getDocument().toObject(Student.class);
                                     studentList.add(addedStudent);
+                                    originalStudentList.add(addedStudent);
                                     break;
 
                                 default:
@@ -118,6 +124,7 @@ public class StudentListFragment extends Fragment {
     private void initUi(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         floatingActionButton = view.findViewById(R.id.fab_add_student);
+        searchView = view.findViewById(R.id.search_view);
     }
 
     private void initListener() {
@@ -131,6 +138,24 @@ public class StudentListFragment extends Fragment {
                 else {
                     Toast.makeText(getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String searchString) {
+                if (searchString.isEmpty()) {
+                    studentList.clear();
+                    studentList.addAll(originalStudentList);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    adapter.getFilter().filter(searchString);
+                }
+                return false;
             }
         });
     }
