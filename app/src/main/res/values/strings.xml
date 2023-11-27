@@ -63,4 +63,22 @@
 
     <string name="initial_birthday">01/01/2000</string>
     <string name="initial_enrollment">01/01/2023</string>
+
+    <string name="sort_code_asc">Code ASC</string>
+    <string name="sort_name_asc">Name ASC</string>
+    <string name="sort_birthday_asc">Birthday ASC</string>
+    <string name="sort_address_asc">Address ASC</string>
+    <string name="sort_gender_asc">Gender ASC</string>
+    <string name="sort_phone_asc">Phone ASC</string>
+    <string name="sort_enrollmentdate_asc">Enrollment Date ASC</string>
+    <string name="sort_major_asc">Major ASC</string>
+
+    <string name="sort_code_desc">Code DESC</string>
+    <string name="sort_name_desc">Name DESC</string>
+    <string name="sort_birthday_desc">Birthday DESC</string>
+    <string name="sort_address_desc">Address DESC</string>
+    <string name="sort_gender_desc">Gender DESC</string>
+    <string name="sort_phone_desc">Phone DESC</string>
+    <string name="sort_enrollmentdate_desc">Enrollment Date DESC</string>
+    <string name="sort_major_desc">Major DESC</string>
 </resources>

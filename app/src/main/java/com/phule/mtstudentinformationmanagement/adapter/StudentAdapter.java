@@ -187,8 +187,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
                     // Perform search
                     String filterPattern = constraint.toString().toLowerCase().trim();
                     for (Student item : studentList) {
-                        if (item.getName().toLowerCase().contains(filterPattern) ||
-                                item.getCode().toLowerCase().contains(filterPattern) ||
+                        if (item.getCode().toLowerCase().contains(filterPattern) ||
+                                item.getName().toLowerCase().contains(filterPattern) ||
+                                item.getBirthday().toLowerCase().contains(filterPattern) ||
+                                item.getAddress().toLowerCase().contains(filterPattern) ||
+                                item.getGender().toLowerCase().contains(filterPattern) ||
+                                item.getPhone().toLowerCase().contains(filterPattern) ||
+                                item.getEnrollmentDate().toLowerCase().contains(filterPattern) ||
                                 item.getMajor().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
                         }

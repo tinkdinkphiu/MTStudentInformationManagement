@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,8 +13,10 @@ import androidx.appcompat.widget.SearchView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,6 +38,8 @@ import com.phule.mtstudentinformationmanagement.ui.activity.CreateStudentActivit
 import com.phule.mtstudentinformationmanagement.ui.activity.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class StudentListFragment extends Fragment {
@@ -48,6 +53,7 @@ public class StudentListFragment extends Fragment {
     private StudentAdapter adapter;
     private FloatingActionButton floatingActionButton;
     private SearchView searchView;
+    private TextView tvOption;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,8 +114,6 @@ public class StudentListFragment extends Fragment {
                                     break;
                             }
                         }
-
-                        // Notify the adapter of changes
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -125,6 +129,7 @@ public class StudentListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         floatingActionButton = view.findViewById(R.id.fab_add_student);
         searchView = view.findViewById(R.id.search_view);
+        tvOption = view.findViewById(R.id.item_tv_option);
     }
 
     private void initListener() {
@@ -138,6 +143,85 @@ public class StudentListFragment extends Fragment {
                 else {
                     Toast.makeText(getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        tvOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_student_sort, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if(menuItem.getItemId() == R.id.menu_sort_code_asc) {
+                            Collections.sort(studentList, Student.studentCodeASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_code_desc) {
+                            Collections.sort(studentList, Student.studentCodeDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_name_asc) {
+                            Collections.sort(studentList, Student.studentNameASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_name_desc) {
+                            Collections.sort(studentList, Student.studentNameDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_birthday_asc) {
+                            Collections.sort(studentList, Student.studentBirthdayASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_birthday_desc) {
+                            Collections.sort(studentList, Student.studentBirthdayDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_address_asc) {
+                            Collections.sort(studentList, Student.studentAddressASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_address_desc) {
+                            Collections.sort(studentList, Student.studentAddressDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_gender_asc) {
+                            Collections.sort(studentList, Student.studentGenderASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_gender_desc) {
+                            Collections.sort(studentList, Student.studentGenderDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_phone_asc) {
+                            Collections.sort(studentList, Student.studentPhoneASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_phone_desc) {
+                            Collections.sort(studentList, Student.studentPhoneDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_enrollmentdate_asc) {
+                            Collections.sort(studentList, Student.studentEnrollmentDateASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_enrollmentdate_desc) {
+                            Collections.sort(studentList, Student.studentEnrollmentDateDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_major_asc) {
+                            Collections.sort(studentList, Student.studentMajorASCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else if (menuItem.getItemId() == R.id.menu_sort_major_desc) {
+                            Collections.sort(studentList, Student.studentMajorDESCComparator);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        return true;
+                    }
+                });
+                popupMenu.show();
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

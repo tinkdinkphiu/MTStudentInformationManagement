@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_sort_code_asc"
+        android:title="@string/sort_code_asc"/>
+    <item
+        android:id="@+id/menu_sort_code_desc"
+        android:title="@string/sort_code_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_name_asc"
+        android:title="@string/sort_name_asc"/>
+    <item
+        android:id="@+id/menu_sort_name_desc"
+        android:title="@string/sort_name_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_birthday_asc"
+        android:title="@string/sort_birthday_asc"/>
+    <item
+        android:id="@+id/menu_sort_birthday_desc"
+        android:title="@string/sort_birthday_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_address_asc"
+        android:title="@string/sort_address_asc"/>
+    <item
+        android:id="@+id/menu_sort_address_desc"
+        android:title="@string/sort_address_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_gender_asc"
+        android:title="@string/sort_gender_asc"/>
+    <item
+        android:id="@+id/menu_sort_gender_desc"
+        android:title="@string/sort_gender_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_phone_asc"
+        android:title="@string/sort_phone_asc"/>
+    <item
+        android:id="@+id/menu_sort_phone_desc"
+        android:title="@string/sort_phone_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_enrollmentdate_asc"
+        android:title="@string/sort_enrollmentdate_asc"/>
+    <item
+        android:id="@+id/menu_sort_enrollmentdate_desc"
+        android:title="@string/sort_enrollmentdate_desc"/>
+
+    <item
+        android:id="@+id/menu_sort_major_asc"
+        android:title="@string/sort_major_asc"/>
+    <item
+        android:id="@+id/menu_sort_major_desc"
+        android:title="@string/sort_major_desc"/>
+</menu>
