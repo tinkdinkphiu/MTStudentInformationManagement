@@ -143,5 +143,19 @@
         </LinearLayout>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_history"
+        android:textSize="20sp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"/>
+    <LinearLayout
+        android:id="@+id/linear_login_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="vertical"/>
+
 
 </LinearLayout>

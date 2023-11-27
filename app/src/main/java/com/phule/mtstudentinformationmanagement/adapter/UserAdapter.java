@@ -12,9 +12,16 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.phule.mtstudentinformationmanagement.R;
 import com.phule.mtstudentinformationmanagement.data.model.User;
 import com.phule.mtstudentinformationmanagement.helper.RetrofitClient;
@@ -105,6 +112,43 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                                                             // Handle response
                                                             UserApiService.ApiResponse apiResponse = response.body();
                                                             Log.d("Response", "Success: " + apiResponse.success + ", Message: " + apiResponse.message);
+                                                            // Successfully removed from authentication
+
+                                                            // Remove user from Firestore
+                                                            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                                                            firebaseFirestore.collection("Users").whereEqualTo("email", user.getEmail()).get()
+                                                                    .addOnCompleteListener(task -> {
+                                                                        if(task.isSuccessful()) {
+                                                                            if(task.getResult().isEmpty()) {
+                                                                                Log.d("removeUser", "No matching documents found");
+                                                                                Toast.makeText(view.getContext(), "No matching documents found", Toast.LENGTH_SHORT).show();
+                                                                                return;
+                                                                            }
+                                                                            for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                                                                String documentId = queryDocumentSnapshot.getId();
+
+                                                                                firebaseFirestore.collection("Users").document(documentId)
+                                                                                        .delete()
+                                                                                        .addOnSuccessListener(aVoid -> {
+                                                                                            // Remove from adapter
+                                                                                            int position = holder.getAdapterPosition();
+                                                                                            userList.remove(position);
+                                                                                            notifyItemRemoved(position);
+                                                                                            Toast.makeText(view.getContext(), "User removed", Toast.LENGTH_SHORT).show();
+                                                                                            Log.d("removeUser", "User removed successfully: " + user.getEmail());
+                                                                                        })
+                                                                                        .addOnFailureListener(e -> {
+                                                                                            Toast.makeText(view.getContext(), "Error removing user", Toast.LENGTH_SHORT).show();
+                                                                                            Log.d("removeUser", "User removed failed: " + user.getEmail());
+                                                                                        });
+                                                                            }
+                                                                        }
+                                                                    })
+                                                                    .addOnFailureListener(e -> {
+                                                                        Toast.makeText(view.getContext(), "Error fetching documents", Toast.LENGTH_SHORT).show();
+                                                                        Log.d("removeUser", "Failed to find user email " + user.getEmail());
+                                                                    });
+
                                                         } else {
                                                             // Handle request errors depending on status code
                                                             Log.d("Response", "Error: " + response.code() + response.message());

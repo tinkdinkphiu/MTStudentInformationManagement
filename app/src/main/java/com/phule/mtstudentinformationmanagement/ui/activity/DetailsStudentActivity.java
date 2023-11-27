@@ -113,7 +113,7 @@ public class DetailsStudentActivity extends AppCompatActivity {
                             Log.d("Student", "No student found with the provided code");
                         }
                     } else {
-                        Log.w("Student", "Error querying student", task.getException());
+                        Log.w("Student", "Error querying student ", task.getException());
                     }
                 });
     }
