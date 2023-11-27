@@ -3,16 +3,19 @@
 
     <string name="dots_3_vertical">&#8942;</string>
 
+    <string name="login_history">Login History</string>
+
     <string name="menu_student_manager">Student Manager</string>
     <string name="menu_user_manager">User Manager</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Log out</string>
 
-    <string name="login_history">Login History</string>
-
     <string name="menu_details">Details</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_remove">Remove</string>
+
+    <string name="menu_add_student_manual">Create Manually</string>
+    <string name="menu_add_student_import">Import</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -83,4 +86,6 @@
     <string name="sort_phone_desc">Phone DESC</string>
     <string name="sort_enrollmentdate_desc">Enrollment Date DESC</string>
     <string name="sort_major_desc">Major DESC</string>
+
+
 </resources>
