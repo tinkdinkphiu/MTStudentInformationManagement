@@ -1,244 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_primary"
     android:orientation="vertical"
-    android:paddingTop="12dp"
+    android:padding="12dp"
     tools:context=".ui.activity.DetailsStudentActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/baseline_close_24"
-            android:paddingLeft="12dp"
-            android:text="" />
-
-        <TextView
-            style="@style/TextTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="90dp"
-            android:text="@string/details_student"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingTop="100dp"
-            android:paddingBottom="12dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="20dp">
-
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/code"
-                    android:textSize="18sp" />
-                <!--    Name-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/name"
-                    android:textSize="18sp" />
-                <!--    Birthday-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/birthday"
-                    android:textSize="18sp" />
-                <!--    Gender-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/gender"
-                    android:textSize="18sp" />
-                <!--    Address-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/address"
-                    android:textSize="18sp" />
-                <!--    Phone-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/phone"
-                    android:textSize="18sp" />
-                <!--    Enrollment-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/enrollment_date"
-                    android:textSize="18sp" />
-                <!--    Major-->
-                <TextView
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:text="@string/major"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_code"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Name-->
-                <TextView
-                    android:id="@+id/tv_name"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Birthday-->
-                <TextView
-                    android:id="@+id/tv_birthday"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Gender-->
-                <TextView
-                    android:id="@+id/tv_gender"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Address-->
-                <TextView
-                    android:id="@+id/tv_address"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Phone-->
-                <TextView
-                    android:id="@+id/tv_phone"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Enrollment-->
-                <TextView
-                    android:id="@+id/tv_enrollmentDate"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-                <!--    Major-->
-                <TextView
-                    android:id="@+id/tv_major"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="5dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/certificate"
-            android:textSize="20sp"
-            android:gravity="center"/>
-        <LinearLayout
-            android:id="@+id/linear_certificate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:orientation="vertical"/>
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
+    <TextView
+        android:id="@+id/tv_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        app:cardCornerRadius="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15">
+        android:drawableLeft="@drawable/baseline_close_24"
+        android:text="" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:padding="5dp"
-            android:src="@drawable/_d_avatar_1"
-            app:shapeAppearanceOverlay="@style/circleImageView" />
 
-    </androidx.cardview.widget.CardView>
+    <TextView
+        style="@style/TextTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/details_student"
+        android:textAllCaps="true"
+        android:textColor="@color/green_secondary"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingRight="20dp">
+
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/code"
+                        android:textSize="18sp" />
+                    <!--    Name-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/name"
+                        android:textSize="18sp" />
+                    <!--    Birthday-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/birthday"
+                        android:textSize="18sp" />
+                    <!--    Gender-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/gender"
+                        android:textSize="18sp" />
+                    <!--    Address-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/address"
+                        android:textSize="18sp" />
+                    <!--    Phone-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/phone"
+                        android:textSize="18sp" />
+                    <!--    Enrollment-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/enrollment_date"
+                        android:textSize="18sp" />
+                    <!--    Major-->
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:text="@string/major"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_code"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Name-->
+                    <TextView
+                        android:id="@+id/tv_name"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Birthday-->
+                    <TextView
+                        android:id="@+id/tv_birthday"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Gender-->
+                    <TextView
+                        android:id="@+id/tv_gender"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Address-->
+                    <TextView
+                        android:id="@+id/tv_address"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Phone-->
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Enrollment-->
+                    <TextView
+                        android:id="@+id/tv_enrollmentDate"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <!--    Major-->
+                    <TextView
+                        android:id="@+id/tv_major"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="5dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/certificate"
+                android:background="@color/green_secondary"
+                android:textColor="@color/white"
+                android:paddingTop="2dp"
+                android:paddingBottom="3dp"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/linear_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

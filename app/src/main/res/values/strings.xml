@@ -58,6 +58,8 @@
     <string name="certificate_name">Certificate name</string>
     <string name="certificate_score">Certificate score</string>
 
+    <string name="personal_profile">Thông tin cá nhân</string>
+
     <string name="male">Male</string>
     <string name="female">Female</string>
 
