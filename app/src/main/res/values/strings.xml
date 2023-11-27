@@ -8,6 +8,8 @@
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Log out</string>
 
+    <string name="login_history">Login History</string>
+
     <string name="menu_details">Details</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_remove">Remove</string>

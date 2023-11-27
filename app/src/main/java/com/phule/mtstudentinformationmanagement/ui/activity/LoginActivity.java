@@ -15,12 +15,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phule.mtstudentinformationmanagement.R;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
@@ -94,6 +99,18 @@ public class LoginActivity extends AppCompatActivity {
                                                             firebaseAuth.signOut();
                                                             Toast.makeText(LoginActivity.this, "Account Locked", Toast.LENGTH_SHORT).show();
                                                         } else {
+                                                            // Add login history
+                                                            Map<String, Object> loginRecord = new HashMap<>();
+                                                            loginRecord.put("email", user.getEmail());
+                                                            loginRecord.put("timestamp", new Timestamp(new Date()));
+
+                                                            firebaseFirestore.collection("Users").document(user.getUid())
+                                                                    .collection("LoginHistory").add(loginRecord)
+                                                                    .addOnSuccessListener(documentReference ->
+                                                                            Log.d("loginHistory", "Login history added " + documentReference.getId()))
+                                                                    .addOnFailureListener(e ->
+                                                                            Log.w("loginHistory", "Error adding history ", e));
+                                                            // Perform login
                                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                             startActivity(intent);
                                                             finishAffinity();
