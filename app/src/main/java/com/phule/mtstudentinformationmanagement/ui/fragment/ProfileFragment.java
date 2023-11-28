@@ -2,10 +2,18 @@ package com.phule.mtstudentinformationmanagement.ui.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -14,15 +22,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phule.mtstudentinformationmanagement.R;
+import com.phule.mtstudentinformationmanagement.data.model.User;
 import com.phule.mtstudentinformationmanagement.helper.DialogHelper;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 /*import com.phule.mtstudentinformationmanagement.ui.activity.ChangeAvatarActivity;*/
 
 public class ProfileFragment extends Fragment {
@@ -32,11 +49,31 @@ public class ProfileFragment extends Fragment {
     private TextInputLayout ilEmail, ilName, ilAge, ilPhone, ilStatus, ilRole;
     private TextInputEditText etEmail, etName, etAge, etPhone, etStatus, etRole;
     private ImageView btnAvatar;
+    private AppCompatButton btnDone;
     private String originalEmail;
     private DialogHelper dialogHelper;
+    ActivityResultLauncher<Intent>  imagePickLaucher;
+    Uri selectedImageUri;
+    User currentUser;
+    ProgressBar progressBar;
+
+    public ProfileFragment(){
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        imagePickLaucher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == RESULT_OK){
+                        Intent data = result.getData();
+                        if(data != null && data.getData() != null){
+                            selectedImageUri = data.getData();
+                            DialogHelper.setProfilePic(getContext(), selectedImageUri, btnAvatar);
+                        }
+                    }
+                }
+                );
     }
 
     @Override
@@ -69,10 +106,36 @@ public class ProfileFragment extends Fragment {
                 startActivityForResult(img, GALLERY_REQ_CODE);
             }
         });
+
+        btnAvatar.setOnClickListener((view1 -> {
+            ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512)
+                    .createIntent(new Function1<Intent, Unit>() {
+                        @Override
+                        public Unit invoke(Intent intent) {
+                            imagePickLaucher.launch(intent);
+                            return null;
+                        }
+                    });
+        }));
+
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(selectedImageUri != null){
+                    DialogHelper.getCurrentProfilePicStorageRef().putFile(selectedImageUri)
+                            .addOnCompleteListener(task -> {
+                               updateToFirestore();
+                            });
+                }else{
+                    updateToFirestore();
+                }
+            }
+        });
+
         return view;
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
@@ -80,7 +143,7 @@ public class ProfileFragment extends Fragment {
                 btnAvatar.setImageURI(data.getData());
             }
         }
-    }
+    }*/
 
     private void initialFirebase() {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -102,6 +165,7 @@ public class ProfileFragment extends Fragment {
         etRole = view.findViewById(R.id.et_role);
 
         btnAvatar = view.findViewById(R.id.btnAvatar);
+        btnDone = view.findViewById(R.id.btnDone);
     }
     private void populateField(String email, String name, String age, String phone, String status, String role) {
         etEmail.setText(email);
@@ -111,18 +175,32 @@ public class ProfileFragment extends Fragment {
         etStatus.setText(status);
         etRole.setText(role);
     }
-    public static ProfileFragment newInstance(String email, String name, String age, String phone, String status, String role) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("email", email);
-        bundle.putString("name", name);
-        bundle.putString("age", age);
-        bundle.putString("phone", phone);
-        bundle.putString("status", status);
-        bundle.putString("role", role);
-
-        fragment.setArguments(bundle);
-
-        return fragment;
+    private void updateToFirestore(){
+        DialogHelper.currentUserDetails().set(currentUser)
+                .addOnCompleteListener(task -> {
+                    setInProgress(false);
+                    if(task.isSuccessful()){
+                        Toast.makeText(getContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(), "That bai", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+    void setInProgress(boolean inProgress){
+        if(inProgress){
+            progressBar.setVisibility(View.VISIBLE);
+        }else{
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+private void getUserData(){
+        DialogHelper.getCurrentProfilePicStorageRef().getDownloadUrl()
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Uri uri = task.getResult();
+                        DialogHelper.setProfilePic(getContext(), uri, btnAvatar);
+                    }
+                });
+}
 }
