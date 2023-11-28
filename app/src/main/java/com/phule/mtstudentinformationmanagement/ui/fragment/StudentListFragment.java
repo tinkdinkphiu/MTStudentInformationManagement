@@ -347,6 +347,7 @@ public class StudentListFragment extends Fragment {
             }
         }
     }
+
     // Getting file path from Uri
     public String getFilePathFromUri(Uri uri) {
         String filePath = null;
@@ -383,7 +384,7 @@ public class StudentListFragment extends Fragment {
                 String[] splited = line.split(",");
 
                 // Check if the split line has enough data for a Student object
-                if (splited.length >= 8) {
+                if (splited.length == 8) {
                     Student student = new Student();
                     student.setCode(splited[0]);
                     student.setName(splited[1]);
@@ -395,6 +396,9 @@ public class StudentListFragment extends Fragment {
                     student.setMajor(splited[7]);
 
                     students.add(student);
+                } else {
+                    Toast.makeText(getContext(), "Imported file format error", Toast.LENGTH_SHORT).show();
+                    Log.e("FileRead", "Imported file format error");
                 }
             }
             scanner.close();
