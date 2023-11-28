@@ -4,18 +4,24 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -43,10 +49,13 @@ import com.phule.mtstudentinformationmanagement.adapter.StudentAdapter;
 import com.phule.mtstudentinformationmanagement.ui.activity.CreateStudentActivity;
 import com.phule.mtstudentinformationmanagement.ui.activity.MainActivity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class StudentListFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
@@ -154,8 +163,31 @@ public class StudentListFragment extends Fragment {
                                 Intent intent = new Intent(getActivity(), CreateStudentActivity.class);
                                 startActivity(intent);
                             } else if (menuItem.getItemId() == R.id.menu_add_student_import) {
-                                // Import from excel
-                                checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+                                // Import from csv
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                    if (Environment.isExternalStorageManager()) {
+                                        // Choosing csv file
+                                        Intent intent = new Intent();
+                                        intent.setType("*/*");
+                                        intent.putExtra(Intent.EXTRA_AUTO_LAUNCH_SINGLE_CHOICE, true);
+                                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                                        startActivityForResult(Intent.createChooser(intent, "Select CSV File "), 101);
+                                    } else {
+                                        // Getting permission from user
+                                        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                        intent.setData(uri);
+                                        getActivity().startActivity(intent);
+                                    }
+                                } else {
+                                    // For below android 11
+                                    Intent intent = new Intent();
+                                    intent.setType("*/*");
+                                    intent.putExtra(Intent.EXTRA_AUTO_LAUNCH_SINGLE_CHOICE, true);
+                                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 102);
+                                    startActivityForResult(Intent.createChooser(intent, "Select CSV File "), 101);
+                                }
                             }
                             return true;
                         }
@@ -283,36 +315,94 @@ public class StudentListFragment extends Fragment {
         }
     }
 
-    private void checkPermission(String permission, int requestCode) {
-        if (ContextCompat.checkSelfPermission(getContext(), permission) == PackageManager.PERMISSION_DENIED) {
-            // Request permission
-            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{permission}, requestCode);
-        } else {
-            Toast.makeText(getContext(), "Permission already granted", Toast.LENGTH_SHORT).show();
-        }
-    }
+    private Uri fileuri;
+    private List<Student> importedStudentList;
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode,
-                permissions,
-                grantResults);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && data != null) {
+            Log.d("FileRead", "onActivityResult");
+            fileuri = data.getData();
+            importedStudentList = new ArrayList<>();
+            importedStudentList = readCSVFile(getFilePathFromUri(fileuri));
 
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Camera Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Storage Permission Granted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Storage Permission Denied", Toast.LENGTH_SHORT).show();
+            for (Student student : importedStudentList) {
+                firebaseFirestore.collection("Students")
+                        .add(student)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d("Firestore", "Student added with ID: " + documentReference.getId());
+                                // Optionally, update UI or perform other actions on success
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("Firestore", "Error adding student", e);
+                                // Optionally, update UI or perform other actions on failure
+                            }
+                        });
             }
         }
     }
+    // Getting file path from Uri
+    public String getFilePathFromUri(Uri uri) {
+        String filePath = null;
+        String scheme = uri.getScheme();
+        Log.d("FileRead", "scheme: " + scheme);
+        if (scheme != null && scheme.equals("content")) {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                filePath = cursor.getString(column_index);
+                cursor.close();
+            }
+        } else if (scheme != null && scheme.equals("file")) {
+            filePath = uri.getPath();
+        }
+        return filePath;
+    }
+
+    // Reading file data
+    public List<Student> readCSVFile(String path) {
+        List<Student> students = new ArrayList<>();
+        if (path == null) {
+            Log.e("FileRead", "File path is null");
+            return students; // Return empty list
+        }
+
+        File file = new File(path);
+        try {
+            Scanner scanner = new Scanner(file, "UTF-8");
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] splited = line.split(",");
+
+                // Check if the split line has enough data for a Student object
+                if (splited.length >= 8) {
+                    Student student = new Student();
+                    student.setCode(splited[0]);
+                    student.setName(splited[1]);
+                    student.setBirthday(splited[2]);
+                    student.setAddress(splited[3]);
+                    student.setGender(splited[4]);
+                    student.setPhone(splited[5]);
+                    student.setEnrollmentDate(splited[6]);
+                    student.setMajor(splited[7]);
+
+                    students.add(student);
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("FileRead", "File not found: " + path);
+        }
+        return students;
+    }
+
 }
