@@ -139,7 +139,7 @@ public class DialogHelper {
         return FirebaseAuth.getInstance().getUid();
     }
     public static DocumentReference currentUserDetails(){
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserID());
+        return FirebaseFirestore.getInstance().collection("Users").document(currentUserID());
     }
 }
 

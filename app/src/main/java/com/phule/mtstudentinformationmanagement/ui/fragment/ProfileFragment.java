@@ -175,5 +175,15 @@ public class ProfileFragment extends Fragment {
                                 .into(btnAvatar);
                     }
                 });
+        DialogHelper.currentUserDetails().get()
+                .addOnCompleteListener(task -> {
+                    currentUser = task.getResult().toObject(User.class);
+                    etEmail.setText(currentUser.getEmail());
+                    etName.setText(currentUser.getName());
+                    etRole.setText(currentUser.getRole());
+                    etStatus.setText(currentUser.getStatus());
+                    etPhone.setText(currentUser.getPhone());
+                    etAge.setText(currentUser.getAge());
+                });
     }
 }
