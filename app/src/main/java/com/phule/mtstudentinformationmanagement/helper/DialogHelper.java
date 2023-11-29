@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -134,8 +133,7 @@ public class DialogHelper {
         Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
     }
     public static StorageReference getCurrentProfilePicStorageRef(){
-        return FirebaseStorage.getInstance().getReference().child("profile_pic")
-                .child(DialogHelper.currentUserID());
+        return FirebaseStorage.getInstance().getReference().child(DialogHelper.currentUserID());
     }
     private static String currentUserID() {
         return FirebaseAuth.getInstance().getUid();

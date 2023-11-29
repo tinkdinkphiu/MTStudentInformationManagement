@@ -2,36 +2,26 @@ package com.phule.mtstudentinformationmanagement.ui.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
-
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phule.mtstudentinformationmanagement.R;
@@ -85,27 +75,7 @@ public class ProfileFragment extends Fragment {
         dialogHelper = new DialogHelper(requireContext());
         initialFirebase();
         initUi(view);
-
-        Bundle args = getArguments();
-        if (args != null) {
-            originalEmail = args.getString("email", "1");
-            String name = args.getString("name", "2");
-            String age = args.getString("age", "3");
-            String phone = args.getString("phone", "4");
-            String status = args.getString("status", "5");
-            String role = args.getString("role", "6");
-
-            populateField(originalEmail, name, age, phone, status, role);
-        }
-        initUi(view);
-        btnAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent img = new Intent(Intent.ACTION_PICK);
-                img.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(img, GALLERY_REQ_CODE);
-            }
-        });
+        getUserData();
 
         btnAvatar.setOnClickListener((view1 -> {
             ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512)
@@ -126,8 +96,9 @@ public class ProfileFragment extends Fragment {
                             .addOnCompleteListener(task -> {
                                updateToFirestore();
                             });
+                    Toast.makeText(getContext(), "Your avatar has been saved", Toast.LENGTH_SHORT).show();
                 }else{
-                    updateToFirestore();
+                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -135,15 +106,6 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
-            if(requestCode==GALLERY_REQ_CODE){
-                btnAvatar.setImageURI(data.getData());
-            }
-        }
-    }*/
 
     private void initialFirebase() {
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -175,32 +137,43 @@ public class ProfileFragment extends Fragment {
         etStatus.setText(status);
         etRole.setText(role);
     }
-    private void updateToFirestore(){
-        DialogHelper.currentUserDetails().set(currentUser)
-                .addOnCompleteListener(task -> {
-                    setInProgress(false);
-                    if(task.isSuccessful()){
-                        Toast.makeText(getContext(), "Thanh cong", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getContext(), "That bai", Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void updateToFirestore() {
+        if (currentUser != null) {
+            DialogHelper.currentUserDetails().set(currentUser)
+                    .addOnCompleteListener(task -> {
+                        setInProgress(false);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Thất bại", Toast.LENGTH_SHORT).show();
+                            if (task.getException() != null) {
+                                Log.e("Firestore Update", "Error: " + task.getException().getMessage());
+                            }
+                        }
+                    });
+        } else {
+            Log.e("Firestore Update", "Error: currentUser is null");
+        }
     }
     void setInProgress(boolean inProgress){
         if(inProgress){
             progressBar.setVisibility(View.VISIBLE);
+            btnDone.setVisibility(View.GONE);
         }else{
             progressBar.setVisibility(View.GONE);
+            btnDone.setVisibility(View.VISIBLE);
         }
     }
 
-    private void getUserData(){
-            DialogHelper.getCurrentProfilePicStorageRef().getDownloadUrl()
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-                            Uri uri = task.getResult();
-                            DialogHelper.setProfilePic(getContext(), uri, btnAvatar);
-                        }
-                    });
+    private void getUserData() {
+        DialogHelper.getCurrentProfilePicStorageRef().getDownloadUrl()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Uri uri = task.getResult();
+                        Glide.with(getContext())
+                                .load(uri)
+                                .into(btnAvatar);
+                    }
+                });
     }
 }
