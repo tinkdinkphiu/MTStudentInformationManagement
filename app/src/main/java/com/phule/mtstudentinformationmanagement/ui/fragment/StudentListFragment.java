@@ -22,6 +22,7 @@ import androidx.appcompat.widget.SearchView;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -51,6 +52,9 @@ import com.phule.mtstudentinformationmanagement.ui.activity.MainActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -66,7 +70,7 @@ public class StudentListFragment extends Fragment {
     private List<Student> studentList;
     private List<Student> originalStudentList;
     private StudentAdapter adapter;
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButton, floatingActionButtonExport;
     private SearchView searchView;
     private TextView tvOption;
     private static final int STORAGE_PERMISSION_CODE = 100;
@@ -144,6 +148,7 @@ public class StudentListFragment extends Fragment {
     private void initUi(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         floatingActionButton = view.findViewById(R.id.fab_add_student);
+        floatingActionButtonExport = view.findViewById(R.id.fab_export);
         searchView = view.findViewById(R.id.search_view);
         tvOption = view.findViewById(R.id.item_tv_option);
     }
@@ -197,6 +202,12 @@ public class StudentListFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+        floatingActionButtonExport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                writeToFile();
             }
         });
         tvOption.setOnClickListener(new View.OnClickListener() {
@@ -409,4 +420,34 @@ public class StudentListFragment extends Fragment {
         return students;
     }
 
+    private void writeToFile() {
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(path, "studentsOutput.csv");
+
+        try {
+            path.mkdirs();
+
+            FileOutputStream stream = new FileOutputStream(file);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream);
+
+            outputStreamWriter.write("Code,Name,Birthday,Address,Gender,Phone,EnrollmentDate,Major\n");
+
+            for(Student student : originalStudentList) {
+                String[] row = {student.getCode(), student.getName(), student.getBirthday(), student.getAddress(),
+                                student.getGender(), student.getPhone(), student.getEnrollmentDate(), student.getMajor()};
+
+                String csvRow = TextUtils.join(",", row) + "\n";
+                outputStreamWriter.write(csvRow);
+            }
+
+            outputStreamWriter.close();
+
+            Toast.makeText(getContext(), "CSV written to DOWNLOAD successfully", Toast.LENGTH_SHORT).show();
+            Log.d("CSVWriteFile", "Successfully writing to CSV file. File store at Download");
+        } catch (IOException e) {
+            Log.e("CSVWriteFile", "Error writing CSV file", e);
+
+            Toast.makeText(getContext(), "Error writing CSV file", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

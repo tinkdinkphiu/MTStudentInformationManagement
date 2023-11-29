@@ -49,7 +49,7 @@ public class ProfileFragment extends Fragment {
     private TextInputLayout ilEmail, ilName, ilAge, ilPhone, ilStatus, ilRole;
     private TextInputEditText etEmail, etName, etAge, etPhone, etStatus, etRole;
     private ImageView btnAvatar;
-    private AppCompatButton btnDone;
+    private Button btnDone;
     private String originalEmail;
     private DialogHelper dialogHelper;
     ActivityResultLauncher<Intent>  imagePickLaucher;
