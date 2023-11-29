@@ -44,8 +44,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:inputType="numberDecimal"
-            android:lines="1"
-            android:maxLength="100" />
+            android:lines="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -233,6 +232,7 @@
             android:focusable="false"
             android:imeOptions="actionDone"
             android:inputType="text"
+            android:text="Software Engineering"
             android:lines="1"
             android:maxLength="100" />
 

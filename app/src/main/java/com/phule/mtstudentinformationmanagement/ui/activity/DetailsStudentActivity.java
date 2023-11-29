@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -124,10 +125,12 @@ public class DetailsStudentActivity extends AppCompatActivity {
 
         TextView textViewName = new TextView(this);
         textViewName.setText(certificate.getCertiName());
+        textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textViewName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
         TextView textViewScore = new TextView(this);
         textViewScore.setText(String.valueOf(certificate.getCertiScore()));
+        textViewScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         textViewScore.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
         linearLayout.addView(textViewName);

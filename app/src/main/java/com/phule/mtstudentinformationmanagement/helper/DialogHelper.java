@@ -76,7 +76,24 @@ public class DialogHelper {
         builder.setTitle("Select Major");
         final String[] majorOptions = {
                 "IT",
-                "Marketing"
+                "Marketing",
+                "Finance",
+                "Engineering",
+                "Healthcare",
+                "Education",
+                "Business",
+                "Art and Design",
+                "Social Sciences",
+                "Science",
+                "Architecture",
+                "Culinary Arts",
+                "Environmental Science",
+                "Psychology",
+                "Communication",
+                "Nursing",
+                "Music",
+                "Mathematics",
+                "History"
         };
         builder.setItems(majorOptions, new DialogInterface.OnClickListener() {
             @Override

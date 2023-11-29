@@ -35,11 +35,6 @@ import com.phule.mtstudentinformationmanagement.ui.activity.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserManagerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UserManagerFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;

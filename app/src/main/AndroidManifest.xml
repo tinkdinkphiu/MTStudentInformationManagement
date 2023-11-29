@@ -25,9 +25,6 @@
         <activity
             android:name=".ui.activity.ManageCertificateActivity"
             android:exported="false" />
-<!--        <activity
-            android:name=".ui.activity.ChangeAvatarActivity"
-            android:exported="false" />-->
         <activity
             android:name=".ui.activity.DetailsStudentActivity"
             android:exported="false" />

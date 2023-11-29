@@ -30,7 +30,6 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    private TextInputLayout ilEmail, ilPassword;
     private TextInputEditText etEmail, etPassword;
     private Button btnSignin;
 
@@ -49,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initUi() {
-        ilEmail = findViewById(R.id.il_email);
-        ilPassword = findViewById(R.id.il_password);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
         btnSignin = findViewById(R.id.btn_sign_in);

@@ -156,31 +156,36 @@ public class ManageCertificateActivity extends AppCompatActivity {
                         String name = etCertiName.getText().toString();
                         String score = etCertiScore.getText().toString();
 
-                        Certificate certificate = new Certificate(name, score);
-                        firebaseFirestore.collection("Students").whereEqualTo("code", originalCode).get()
-                                .addOnCompleteListener(task -> {
-                                    if (task.isSuccessful()) {
-                                        QuerySnapshot studentsSnapshot = task.getResult();
-                                        if (studentsSnapshot != null && !studentsSnapshot.isEmpty()) {
-                                            for (DocumentSnapshot studentDocument : studentsSnapshot.getDocuments()) {
-                                                studentDocument.getReference()
-                                                        .collection("Certificates")
-                                                        .add(certificate)
-                                                        .addOnSuccessListener(documentReference -> {
-                                                            Toast.makeText(ManageCertificateActivity.this, "Certificate added to Student", Toast.LENGTH_SHORT).show();
-                                                        })
-                                                        .addOnFailureListener(e -> {
-                                                            Toast.makeText(ManageCertificateActivity.this, "Error adding certificate", Toast.LENGTH_SHORT).show();
-                                                            Log.w("Certificates", "Error adding certificate", e);
-                                                        });
+                        if(name.length() > 0 && score.length() > 0) {
+                            Certificate certificate = new Certificate(name, score);
+                            firebaseFirestore.collection("Students").whereEqualTo("code", originalCode).get()
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            QuerySnapshot studentsSnapshot = task.getResult();
+                                            if (studentsSnapshot != null && !studentsSnapshot.isEmpty()) {
+                                                for (DocumentSnapshot studentDocument : studentsSnapshot.getDocuments()) {
+                                                    studentDocument.getReference()
+                                                            .collection("Certificates")
+                                                            .add(certificate)
+                                                            .addOnSuccessListener(documentReference -> {
+                                                                Toast.makeText(ManageCertificateActivity.this, "Certificate added to Student", Toast.LENGTH_SHORT).show();
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                                Toast.makeText(ManageCertificateActivity.this, "Error adding certificate", Toast.LENGTH_SHORT).show();
+                                                                Log.w("Certificates", "Error adding certificate", e);
+                                                            });
+                                                }
+                                            } else {
+                                                Log.d("Student", "No student found with the provided originalCode");
                                             }
                                         } else {
-                                            Log.d("Student", "No student found with the provided originalCode");
+                                            Log.w("Student", "Error querying student", task.getException());
                                         }
-                                    } else {
-                                        Log.w("Student", "Error querying student", task.getException());
-                                    }
-                                });
+                                    });
+                        } else {
+                            Toast.makeText(ManageCertificateActivity.this, "Empty name/score", Toast.LENGTH_SHORT).show();
+                        }
+
                         dialog.dismiss();
                     });
 

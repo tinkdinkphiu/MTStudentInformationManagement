@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MTStudentInformationManagement</string>
+    <string name="app_name">Student Information Manager</string>
 
     <string name="dots_3_vertical">&#8942;</string>
 
@@ -61,7 +61,7 @@
     <string name="certificate_name">Certificate name</string>
     <string name="certificate_score">Certificate score</string>
 
-    <string name="personal_profile">Thông tin cá nhân</string>
+    <string name="personal_profile">Personal Profile</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -87,5 +87,7 @@
     <string name="sort_enrollmentdate_desc">Enrollment Date DESC</string>
     <string name="sort_major_desc">Major DESC</string>
 
+    <string name="default_status">Normal</string>
+    <string name="default_role">Employee</string>
 
 </resources>

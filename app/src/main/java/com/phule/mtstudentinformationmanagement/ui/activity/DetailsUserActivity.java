@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -88,6 +89,7 @@ public class DetailsUserActivity extends AppCompatActivity {
 
                                                 TextView textView = new TextView(DetailsUserActivity.this);
                                                 textView.setText(timestamp.toString());
+                                                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                                                 linearLoginHistory.addView(textView);
                                             }
                                         } else {

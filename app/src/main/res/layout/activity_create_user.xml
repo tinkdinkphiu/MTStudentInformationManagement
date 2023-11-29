@@ -35,8 +35,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
@@ -59,8 +59,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
@@ -84,8 +84,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
@@ -109,8 +109,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_age"
@@ -134,8 +134,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_phone"
@@ -159,8 +159,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_status"
@@ -171,7 +171,8 @@
             android:focusableInTouchMode="false"
             android:imeOptions="actionNext"
             android:lines="1"
-            android:maxLength="100" />
+            android:maxLength="100"
+            android:text="@string/default_status" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -186,8 +187,8 @@
         android:textColorHint="@color/green_primary"
         app:boxStrokeColor="@color/green_primary"
         app:boxStrokeErrorColor="@color/red"
-        app:hintTextColor="@color/green_primary"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/green_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_role"
@@ -198,7 +199,8 @@
             android:focusableInTouchMode="false"
             android:imeOptions="actionNext"
             android:lines="1"
-            android:maxLength="100" />
+            android:maxLength="100"
+            android:text="@string/default_role" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -216,9 +218,9 @@
         android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/green_primary"
+        android:text="@string/create"
         android:textColor="@color/white"
         android:textSize="20dp"
-        app:cornerRadius="4dp"
-        android:text="@string/create" />
+        app:cornerRadius="4dp" />
 
 </LinearLayout>

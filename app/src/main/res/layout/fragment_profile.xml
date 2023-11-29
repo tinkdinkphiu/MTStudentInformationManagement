@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_marginTop="30dp"
             android:id="@+id/btnAvatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/baseline_person_24"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:background="#f2e8cf"
-            android:layout_gravity="center"/>
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/baseline_person_24" />
 
         <TextView
             style="@style/TextTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/personal_profile"
             android:textAllCaps="true"
             android:textColor="@color/green_secondary"
             android:textSize="25sp"
-            android:layout_marginTop="24dp"
             android:textStyle="bold" />
         <!--    Email-->
         <com.google.android.material.textfield.TextInputLayout
@@ -35,12 +38,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:layout_marginHorizontal="12dp"
             android:hint="@string/email"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
-            app:hintTextColor="@color/green_primary"
-            android:textColorHint="@color/green_primary">
+            app:hintTextColor="@color/green_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_email"
@@ -60,14 +62,13 @@
             android:id="@+id/il_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="12dp"
             android:hint="@string/name"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:endIconMode="clear_text"
-            app:hintTextColor="@color/green_primary"
-            android:textColorHint="@color/green_primary">
+            app:hintTextColor="@color/green_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
@@ -75,9 +76,6 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName"
-                android:clickable="false"
-                android:enabled="false"
-                android:focusable="false"
                 android:lines="1"
                 android:maxLength="100" />
 
@@ -88,14 +86,13 @@
             android:id="@+id/il_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="12dp"
             android:hint="@string/age"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:endIconMode="clear_text"
-            app:hintTextColor="@color/green_primary"
-            android:textColorHint="@color/green_primary">
+            app:hintTextColor="@color/green_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_age"
@@ -103,9 +100,6 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="numberDecimal"
-                android:clickable="false"
-                android:enabled="false"
-                android:focusable="false"
                 android:lines="1"
                 android:maxLength="100" />
 
@@ -116,14 +110,13 @@
             android:id="@+id/il_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="12dp"
             android:hint="@string/phone"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:endIconMode="clear_text"
-            app:hintTextColor="@color/green_primary"
-            android:textColorHint="@color/green_primary">
+            app:hintTextColor="@color/green_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_phone"
@@ -131,9 +124,6 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="phone"
-                android:clickable="false"
-                android:enabled="false"
-                android:focusable="false"
                 android:lines="1"
                 android:maxLength="100" />
 
@@ -144,26 +134,25 @@
             android:id="@+id/il_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="12dp"
             android:hint="@string/status"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:endIconMode="clear_text"
-            app:hintTextColor="@color/green_primary"
-            android:textColorHint="@color/green_primary">
+            app:hintTextColor="@color/green_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:cursorVisible="false"
+                android:enabled="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:clickable="false"
-                android:enabled="false"
                 android:lines="1"
                 android:maxLength="100" />
 
@@ -174,36 +163,41 @@
             android:id="@+id/il_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="12dp"
             android:hint="@string/role"
+            android:textColorHint="@color/green_primary"
             app:boxStrokeColor="@color/green_primary"
             app:boxStrokeErrorColor="@color/red"
             app:endIconMode="clear_text"
-            app:hintTextColor="@color/green_primary"
-            android:textColorHint="@color/green_primary">
+            app:hintTextColor="@color/green_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_role"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:cursorVisible="false"
+                android:enabled="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:clickable="false"
-                android:enabled="false"
                 android:lines="1"
                 android:maxLength="100" />
 
         </com.google.android.material.textfield.TextInputLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnDone"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="XONG"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/TextPrimaryOpposite"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/green_primary"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:cornerRadius="4dp" />
 
     </LinearLayout>
 

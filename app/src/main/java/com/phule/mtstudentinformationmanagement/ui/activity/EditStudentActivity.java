@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.phule.mtstudentinformationmanagement.R;
 import com.phule.mtstudentinformationmanagement.data.model.Certificate;
 import com.phule.mtstudentinformationmanagement.helper.DialogHelper;
+import com.phule.mtstudentinformationmanagement.helper.FieldValidator;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -36,12 +37,12 @@ import java.util.Map;
 
 public class EditStudentActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
-    private TextInputLayout ilCode, ilName, ilBirthday, ilAddress, ilGender, ilPhone, ilEnrollmentDate, ilMajor;
     private TextInputEditText etCode, etName, etBirthday, etAddress, etGender, etPhone, etEnrollmentDate, etMajor;
     private TextView tvClose;
     private Button btnSave, btnCertificate;
     private String originalCode;
     private DialogHelper dialogHelper;
+    private FieldValidator fieldValidator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class EditStudentActivity extends AppCompatActivity {
         String major = intent.getStringExtra("major");
 
         dialogHelper = new DialogHelper(this);
+        fieldValidator = new FieldValidator(this);
 
         initialFirebase();
         initUi();
@@ -74,15 +76,6 @@ public class EditStudentActivity extends AppCompatActivity {
     }
 
     private void initUi() {
-        ilCode = findViewById(R.id.il_code);
-        ilName = findViewById(R.id.il_name);
-        ilBirthday = findViewById(R.id.il_birthday);
-        ilAddress = findViewById(R.id.il_address);
-        ilGender = findViewById(R.id.il_gender);
-        ilPhone = findViewById(R.id.il_phone);
-        ilEnrollmentDate = findViewById(R.id.il_enrollment_date);
-        ilMajor = findViewById(R.id.il_major);
-
         etCode = findViewById(R.id.et_code);
         etName = findViewById(R.id.et_name);
         etBirthday = findViewById(R.id.et_birthday);
@@ -160,49 +153,68 @@ public class EditStudentActivity extends AppCompatActivity {
     }
 
     private void onSaveClick() {
-        String editedCode = etCode.getText().toString();
-        String editedName = etName.getText().toString();
-        String editedBirthday = etBirthday.getText().toString();
-        String editedAddress = etAddress.getText().toString();
-        String editedGender = etGender.getText().toString();
-        String editedPhone = etPhone.getText().toString();
-        String editedEnrollmentDate = etEnrollmentDate.getText().toString();
-        String editedMajor = etMajor.getText().toString();
+        if(isValidField()) {
+            String editedCode = etCode.getText().toString();
+            String editedName = etName.getText().toString();
+            String editedBirthday = etBirthday.getText().toString();
+            String editedAddress = etAddress.getText().toString();
+            String editedGender = etGender.getText().toString();
+            String editedPhone = etPhone.getText().toString();
+            String editedEnrollmentDate = etEnrollmentDate.getText().toString();
+            String editedMajor = etMajor.getText().toString();
 
-        firebaseFirestore.collection("Students").whereEqualTo("code", originalCode).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String documentId = document.getId();
+            firebaseFirestore.collection("Students").whereEqualTo("code", originalCode).get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String documentId = document.getId();
 
-                            Map<String, Object> updatedStudent = new HashMap<>();
-                            updatedStudent.put("code", editedCode);
-                            updatedStudent.put("name", editedName);
-                            updatedStudent.put("birthday", editedBirthday);
-                            updatedStudent.put("address", editedAddress);
-                            updatedStudent.put("gender", editedGender);
-                            updatedStudent.put("phone", editedPhone);
-                            updatedStudent.put("enrollmentDate", editedEnrollmentDate);
-                            updatedStudent.put("major", editedMajor);
+                                Map<String, Object> updatedStudent = new HashMap<>();
+                                updatedStudent.put("code", editedCode);
+                                updatedStudent.put("name", editedName);
+                                updatedStudent.put("birthday", editedBirthday);
+                                updatedStudent.put("address", editedAddress);
+                                updatedStudent.put("gender", editedGender);
+                                updatedStudent.put("phone", editedPhone);
+                                updatedStudent.put("enrollmentDate", editedEnrollmentDate);
+                                updatedStudent.put("major", editedMajor);
 
-                            firebaseFirestore.collection("Students").document(documentId)
-                                    .update(updatedStudent)
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(EditStudentActivity.this, "Student updated", Toast.LENGTH_SHORT).show();
-                                        Log.d("updateStudent", "Student updated successfully");
-                                        // ReloadAfterEditStudent(4) - Return result to MainActivity
-                                        setResult(Activity.RESULT_OK);
-                                        finish();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(EditStudentActivity.this, "Error updating student", Toast.LENGTH_SHORT).show();
-                                        Log.d("updateStudent", "Student updated failed");
-                                    });
+                                firebaseFirestore.collection("Students").document(documentId)
+                                        .update(updatedStudent)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(EditStudentActivity.this, "Student updated", Toast.LENGTH_SHORT).show();
+                                            Log.d("updateStudent", "Student updated successfully");
+                                            // ReloadAfterEditStudent(4) - Return result to MainActivity
+                                            setResult(Activity.RESULT_OK);
+                                            finish();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(EditStudentActivity.this, "Error updating student", Toast.LENGTH_SHORT).show();
+                                            Log.d("updateStudent", "Student updated failed");
+                                        });
+                            }
+                        } else {
+                            Toast.makeText(EditStudentActivity.this, "Failed to find student code", Toast.LENGTH_SHORT).show();
+                            Log.d("updateStudent", "Failed to find student code");
                         }
-                    } else {
-                        Toast.makeText(EditStudentActivity.this, "Failed to find student code", Toast.LENGTH_SHORT).show();
-                        Log.d("updateStudent", "Failed to find student code");
-                    }
-                });
+                    });
+        }
+    }
+    private boolean isValidField() {
+        if (!fieldValidator.isValidCode(etCode.getText().toString())) {
+            Toast.makeText(this, "Code must be number and 8 character", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!fieldValidator.isValidName(etName.getText().toString())) {
+            Toast.makeText(this, "Name must not contain special character or number", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!fieldValidator.isValidTextField(etAddress.getText().toString())) {
+            Toast.makeText(this, "Address is empty", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!fieldValidator.isValidPhone(etPhone.getText().toString())) {
+            Toast.makeText(this, "Phone must be number and 10 character", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
     }
 }

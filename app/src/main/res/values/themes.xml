@@ -4,7 +4,7 @@
 
     </style>
 
-    <style name="Base.Theme.MTStudentInformationManagement.NoActionbar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.MTStudentInformationManagement.NoActionbar" parent="Theme.Material3.DayNight.NoActionBar">
 
     </style>
 
