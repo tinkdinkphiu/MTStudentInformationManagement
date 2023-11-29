@@ -46,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -290,8 +291,16 @@ public class ManageCertificateActivity extends AppCompatActivity {
         File file = new File(path);
         try {
             Scanner scanner = new Scanner(file, "UTF-8");
+            boolean firstLine = true;
+
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
+
+                if (firstLine) {
+                    line = removeUtf8Bom(line);
+                    firstLine = false;
+                }
+
                 String[] splited = line.split(",");
 
                 // Check if the split line has enough data for a Certificate object
@@ -314,6 +323,14 @@ public class ManageCertificateActivity extends AppCompatActivity {
         }
         return certificates;
     }
+
+    private String removeUtf8Bom(String s) {
+        if (s != null && s.startsWith("\uFEFF")) {
+            return s.substring(1);
+        }
+        return s;
+    }
+
     private void writeToFile() {
         File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File file = new File(path, originalCode + "Certificates.csv");
@@ -322,7 +339,7 @@ public class ManageCertificateActivity extends AppCompatActivity {
             path.mkdirs();
 
             FileOutputStream stream = new FileOutputStream(file);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream, StandardCharsets.UTF_8);
 
             outputStreamWriter.write("Name,Score\n");
 
