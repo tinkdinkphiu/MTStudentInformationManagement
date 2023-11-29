@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -116,8 +117,12 @@ public class UserManagerFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CreateUserActivity.class);
-                startActivity(intent);
+                if(hasAuthority()) {
+                    Intent intent = new Intent(getActivity(), CreateUserActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext(), "You don't have the authority to do this action", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

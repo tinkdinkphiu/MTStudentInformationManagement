@@ -131,7 +131,7 @@ public class DialogHelper {
     public void openRoleDialog(final TextInputEditText editText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Select Role");
-        final String[] statusOptions = {"Admin", "Manger", "Employee"};
+        final String[] statusOptions = {"Admin", "Manager", "Employee"};
         builder.setItems(statusOptions, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

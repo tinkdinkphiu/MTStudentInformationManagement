@@ -15,7 +15,10 @@ public class FieldValidator {
         return code.length() == 8;
     }
     public boolean isValidName(String name) {
-        String regex = "^[a-zA-Z\\s]+$";
+        if(name == null || name.trim().isEmpty()) {
+            return false;
+        }
+        String regex = "^[a-zA-Z\\sàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđĐ]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(name);
         return matcher.matches();
@@ -30,7 +33,13 @@ public class FieldValidator {
     }
 
     public boolean isValidTextField(String textField) {
-        return textField.length() > 0;
+        if(textField == null || textField.trim().isEmpty()) {
+            return false;
+        }
+        String regex = "^[a-zA-Z\\sàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđĐ]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(textField);
+        return matcher.matches();
     }
     public boolean isValidPhone(String phone) {
         return phone.matches("[0-9]+") && phone.length() == 10;
