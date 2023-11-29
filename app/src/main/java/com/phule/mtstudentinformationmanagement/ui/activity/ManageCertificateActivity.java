@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,6 +43,9 @@ import com.phule.mtstudentinformationmanagement.data.model.Student;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,7 +53,7 @@ import java.util.Scanner;
 public class ManageCertificateActivity extends AppCompatActivity {
     private String originalCode;
     private RecyclerView recyclerView;
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButton, floatingActionButtonExport;
     private CertificateAdapter certificateAdapter;
     private List<Certificate> certificateList;
     private FirebaseFirestore firebaseFirestore;
@@ -77,6 +81,7 @@ public class ManageCertificateActivity extends AppCompatActivity {
     private void initUi() {
         recyclerView = findViewById(R.id.recycler_view);
         floatingActionButton = findViewById(R.id.fab_add_certificate);
+        floatingActionButtonExport = findViewById(R.id.fab_export);
     }
 
     private void initAdapter() {
@@ -89,6 +94,9 @@ public class ManageCertificateActivity extends AppCompatActivity {
     private void initListener() {
         floatingActionButton.setOnClickListener(v -> {
             showPopupMenu(v);
+        });
+        floatingActionButtonExport.setOnClickListener(v -> {
+            writeToFile();
         });
     }
 
@@ -305,5 +313,34 @@ public class ManageCertificateActivity extends AppCompatActivity {
             Log.e("FileRead", "File not found: " + path);
         }
         return certificates;
+    }
+    private void writeToFile() {
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(path, originalCode + "Certificates.csv");
+
+        try {
+            path.mkdirs();
+
+            FileOutputStream stream = new FileOutputStream(file);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(stream);
+
+            outputStreamWriter.write("Name,Score\n");
+
+            for(Certificate certificate : certificateList) {
+                String[] row = {certificate.getCertiName(), certificate.getCertiScore()};
+
+                String csvRow = TextUtils.join(",", row) + "\n";
+                outputStreamWriter.write(csvRow);
+            }
+
+            outputStreamWriter.close();
+
+            Toast.makeText(this, originalCode + "Certificates.csv written to DOWNLOAD successfully", Toast.LENGTH_SHORT).show();
+            Log.d("CSVWriteFile", "Successfully writing to CSV file. File store at Download");
+        } catch (IOException e) {
+            Log.e("CSVWriteFile", "Error writing CSV file", e);
+
+            Toast.makeText(this, "Error writing CSV file", Toast.LENGTH_SHORT).show();
+        }
     }
 }

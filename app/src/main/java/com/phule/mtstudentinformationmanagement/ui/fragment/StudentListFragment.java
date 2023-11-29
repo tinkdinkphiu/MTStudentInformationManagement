@@ -442,11 +442,10 @@ public class StudentListFragment extends Fragment {
 
             outputStreamWriter.close();
 
-            Toast.makeText(getContext(), "CSV written to DOWNLOAD successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "studentsOutput.csv written to DOWNLOAD successfully", Toast.LENGTH_SHORT).show();
             Log.d("CSVWriteFile", "Successfully writing to CSV file. File store at Download");
         } catch (IOException e) {
             Log.e("CSVWriteFile", "Error writing CSV file", e);
-
             Toast.makeText(getContext(), "Error writing CSV file", Toast.LENGTH_SHORT).show();
         }
     }

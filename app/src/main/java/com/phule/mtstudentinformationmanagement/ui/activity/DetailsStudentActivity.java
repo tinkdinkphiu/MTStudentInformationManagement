@@ -45,6 +45,7 @@ public class DetailsStudentActivity extends AppCompatActivity {
         String enrollmentDate = intent.getStringExtra("enrollmentDate");
         String major = intent.getStringExtra("major");
 
+
         initFirebase();
         initUi();
         populateField(studentCode, name, birthday, address, gender, phone, enrollmentDate, major);

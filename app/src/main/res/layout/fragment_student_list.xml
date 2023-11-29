@@ -60,6 +60,7 @@
         app:backgroundTint="@color/green_primary"
         app:fabSize="normal" />
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_export"
         android:layout_width="wrap_content"
@@ -69,5 +70,4 @@
         android:src="@drawable/baseline_file_upload_24"
         app:backgroundTint="@color/green_primary"
         app:fabSize="normal" />
-
 </FrameLayout>
