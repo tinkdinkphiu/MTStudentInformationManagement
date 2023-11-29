@@ -194,13 +194,13 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-private void getUserData(){
-        DialogHelper.getCurrentProfilePicStorageRef().getDownloadUrl()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        Uri uri = task.getResult();
-                        DialogHelper.setProfilePic(getContext(), uri, btnAvatar);
-                    }
-                });
-}
+    private void getUserData(){
+            DialogHelper.getCurrentProfilePicStorageRef().getDownloadUrl()
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()){
+                            Uri uri = task.getResult();
+                            DialogHelper.setProfilePic(getContext(), uri, btnAvatar);
+                        }
+                    });
+    }
 }
